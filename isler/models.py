@@ -5,7 +5,7 @@ from django.utils.text import slugify
 # Create your models here.
 class İsBilgileri(models.Model):
     is_isim=models.CharField(max_length=100)
-    fiyat=models.IntegerField()
+    fiyat=models.PositiveSmallIntegerField(default=1)
     resim=models.ImageField(upload_to='is')
     is_aciklama=models.TextField()
     kategori=models.ForeignKey(Kategori,on_delete=models.DO_NOTHING)

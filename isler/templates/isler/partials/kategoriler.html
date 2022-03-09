@@ -1,5 +1,4 @@
-<form  method="post">
-    {% csrf_token %}
+<form  method="get" >
     <div class="w3ls_dresses_grid_left_grid">
         <h3>Kategoriler</h3>
         <div class="w3ls_dresses_grid_left_grid_sub">
@@ -26,9 +25,9 @@
         <h3>Fiyat Aralığı</h3>
         <div class="w3ls_dresses_grid_left_grid_sub">
             <div class="ecommerce_color ecommerce_size">
-                <input type="text" name="min_fiyat" class="question" id="nme" value="{{min_fiyat}}"/>
+                <input type="number" min=0 name="min_fiyat" class="question" id="nme"/>
                 <label class="fiyatlbl" for="nme"><span class="fiyat">Minimum Fiyat</span></label>
-                <input type="text" name="max_fiyat" class="question" id="msg" value="{{max_fiyat}}" />
+                <input type="number" min=0 name="max_fiyat" class="question" id="msg"/>
                 <label class="fiyatlbl" for="msg"><span class="fiyat">Maksimum Fiyat</span></label>
                 {% comment %} <input type="number" name="min_fiyat" placeholder="0">-
                 <input type="number" name="max_fiyat" placeholder="100"> {% endcomment %}

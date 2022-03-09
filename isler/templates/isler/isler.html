@@ -52,34 +52,34 @@
 						<div class="clearfix"> </div>
 					</div> {% endcomment %}
 					<div class="w3ls_dresses_grid_right_grid3 ">
-						{% if isvar %}
-							{% for i in is %}
-
-								<div class="col-md-6 agileinfo_new_products_grid agileinfo_new_products_grid_dresses " style="background-color:#fcfcfc">
-									<div class="agile_ecommerce_tab_left dresses_grid">
-										<div class="hs-wrapper hs-wrapper3 ">
-											<img src="{{ i.resim.url }}" alt=" " class="img-responsive" />
-										</div>
-										<h5><a href="{% url 'icerik' %}">{{ i.is_isim }}</a></h5>
-										<div class="simpleCart_shelfItem">
-											<p><i class="item_price">{{ i.fiyat }} ₺</i></p>
-											<p><a class="item_add" href="{% url 'icerik' %}">İşe Git</a></p>
-										</div>
-										
-									</div>
+						{% if error %}
+							<div class="col-md-6 agileinfo_new_products_grid agileinfo_new_products_grid_dresses " >
+								<div class="agile_ecommerce_tab_left dresses_grid">
+									
+									<h5><a href="{% url 'icerik' %}">{{ error }}</a></h5>
+								
+									
 								</div>
-							{% endfor %}
+							</div>
 
 						{% else %}
-					
-						<div class="col-md-6 agileinfo_new_products_grid agileinfo_new_products_grid_dresses " >
-							<div class="agile_ecommerce_tab_left dresses_grid">
-								
-								<h5><a href="{% url 'icerik' %}">{{ error }}</a></h5>
-							
-								
+						{% for i in is %}
+
+							<div class="col-md-6 agileinfo_new_products_grid agileinfo_new_products_grid_dresses " style="background-color:#fcfcfc">
+								<div class="agile_ecommerce_tab_left dresses_grid">
+									<div class="hs-wrapper hs-wrapper3 ">
+										<img src="{{ i.resim.url }}" alt=" " class="img-responsive" />
+									</div>
+									<h5><a href="{% url 'icerik' %}">{{ i.is_isim }}</a></h5>
+									<div class="simpleCart_shelfItem">
+										<p><i class="item_price">{{ i.fiyat }} ₺</i></p>
+										<p><a class="item_add" href="{% url 'icerik' %}">İşe Git</a></p>
+									</div>
+									
+								</div>
 							</div>
-						</div>
+						{% endfor %}
+						
 						
 						{% endif %}
 						
