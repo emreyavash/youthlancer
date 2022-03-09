@@ -1,0 +1,139 @@
+{% extends "index.html" %}
+{% block title %}Anasayfa{% endblock title %}
+{% load static %}
+
+{% block content %}
+<!-- banner -->
+<div class="banner" id="home1">
+    <div class="container">
+        <h3>Youthlancer <span>Freelancerların Tek Adresi</span></h3>
+    </div>
+</div>
+<div class="banner-bottom">
+    <div class="container">
+        <div class="col-md-5 wthree_banner_bottom_left">
+            <div class="video-img">
+                <a class="play-icon popup-with-zoom-anim" href="#small-dialog">
+                    <span class="glyphicon glyphicon-expand" aria-hidden="true"></span>
+                </a>
+            </div>
+            <!-- pop-up-box -->    
+                    <link href="{% static 'css/popuo-box.css' %}" rel="stylesheet" type="text/css" property="" media="all" />
+                    <script src="{% static 'js/jquery.magnific-popup.js' %}" type="text/javascript"></script>
+                <!--//pop-up-box -->
+                <div id="small-dialog" class="mfp-hide">
+                    <iframe src="https://player.vimeo.com/video/23259282?title=0&byline=0&portrait=0"></iframe>
+                </div>
+                <script>
+                    $(document).ready(function() {
+                    $('.popup-with-zoom-anim').magnificPopup({
+                        type: 'inline',
+                        fixedContentPos: false,
+                        fixedBgPos: true,
+                        overflowY: 'auto',
+                        closeBtnInside: true,
+                        preloader: false,
+                        midClick: true,
+                        removalDelay: 300,
+                        mainClass: 'my-mfp-zoom-in'
+                    });
+                                                                                    
+                    });
+                </script>
+        </div>
+
+        <div class="col-md-7 wthree_banner_bottom_right">
+            <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                <ul id="myTab" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#bosis" role="tab" id="bosis-tab" data-toggle="tab" aria-controls="bosis">Boştaki işler</a></li>
+                    <li role="presentation"><a href="#bitenis" role="tab" id="bitenis-tab" data-toggle="tab" aria-controls="bitenis">Biten İşler</a></li>
+                                            
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade active in" id="bosis" aria-labelledby="bosis-tab">
+                        <div class="agile_ecommerce_tabs">
+                            <div class="col-md-4 agile_ecommerce_tab_left">
+                                <div class="hs-wrapper">
+                                    <img src="{% static 'images/yazılım.jpg' %}" alt=" "  class="img-responsive" />
+                                </div>
+                                <h5><a href="single.html">Web sitesi Yaptırmak İstiyorum</a></h5>
+                                <div class="simpleCart_shelfItem">
+                                    <p><i class="item_price">2500 ₺</i></p>
+                                    <p><a class="item_add" href="#">Başvur</a></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 agile_ecommerce_tab_left">
+                                <div class="hs-wrapper">
+                                    <img src="{% static 'images/yazılım.jpg' %}" alt=" " class="img-responsive" />
+                                </div>
+                                <h5><a href="single.html">Metin yazdırmak istiyorum</a></h5>
+                                <div class="simpleCart_shelfItem">
+                                    <p><i class="item_price">250 ₺</i></p>
+                                    <p><a class="item_add" href="#">Başvur</a></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 agile_ecommerce_tab_left">
+                                <div class="hs-wrapper">
+                                    <img src="{% static 'images/yazılım.jpg' %}" alt=" " class="img-responsive" />
+                                </div>
+                                <h5><a href="single.html">Şirketime logo tasarlatıcam.</a></h5>
+                                <div class="simpleCart_shelfItem">
+                                    <p><i class="item_price">500 ₺</i></p>
+                                    <p><a class="item_add" href="#">Başvur</a></p>
+                                </div>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="bitenis" aria-labelledby="bitenis-tab">
+                        <div class="agile_ecommerce_tabs">
+                            <div class="col-md-4 agile_ecommerce_tab_left">
+                                <div class="hs-wrapper">
+                                    <img src="{% static 'images/yazılım.jpg' %}" alt=" "  class="img-responsive" />
+                                </div>
+                                <h5><a href="single.html">Web sitesi Yaptırmak İstiyorum</a></h5>
+                                <div class="simpleCart_shelfItem">
+                                    <p><i class="item_price">2500 ₺</i></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 agile_ecommerce_tab_left">
+                                <div class="hs-wrapper">
+                                    <img src="{% static 'images/yazılım.jpg' %}" alt=" " class="img-responsive" />
+                                </div>
+                                <h5><a href="single.html">Metin yazdırmak istiyorum</a></h5>
+                                <div class="simpleCart_shelfItem">
+                                    <p><i class="item_price">250 ₺</i></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 agile_ecommerce_tab_left">
+                                <div class="hs-wrapper">
+                                    <img src="{% static 'images/yazılım.jpg' %}" alt=" " class="img-responsive" />                                
+                                </div>
+                                <h5><a href="single.html">Şirketime logo tasarlatacağım.</a></h5>
+                                <div class="simpleCart_shelfItem">
+                                    <p><i class="item_price">500 ₺</i></p>
+                                    
+                                </div>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>						
+                    
+                    </div>
+            </div>
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+<!-- special-deals -->
+{% include 'anasayfa/partials/yorumlar.html' %}
+<!-- //special-deals -->
+<!-- new-products -->
+{% include 'anasayfa/partials/youthlog.html' %}
+<!-- //new-products -->
+<!-- top-brands -->
+{% include  'anasayfa/partials/destekleyenler.html' %}
+<!-- //top-brands -->
+{% endblock content %}

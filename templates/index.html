@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Youthlancer | {% block title %}{% endblock title %}</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Freelancerların tek adresi" />
+{% include 'partials/style.html' %}
+<!-- //end-smooth-scrolling -->
+</head>
+	
+<body>
+<!-- header -->
+<div class="header">
+	<div class="container">
+		{% include 'partials/loginbox.html' %}
+        {% include 'partials/logo.html' %}
+		
+		<div class="clearfix"> </div>
+	</div>
+</div>
+<!--Login Popup-->
+{% include 'partials/login.html' %}
+<!--Login Popup bitiş-->
+
+<!--header-->
+{% include 'partials/navbar.html' %}
+<!-- //header -->
+
+<!-- banner-bottom -->
+
+<!-- //banner-bottom -->
+{% block navbar %}{% endblock %}
+
+{% block content %}{% endblock %}
+
+
+<!-- footer -->
+{% include 'partials/footer.html' %}
+<!-- //footer -->
+</body>
+</html>
