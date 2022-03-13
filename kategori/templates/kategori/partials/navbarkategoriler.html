@@ -1,7 +1,7 @@
 {% for ktgr in kategori %}
     <div class="col-sm-12">
         <ul class="multi-column-dropdown">
-            <a href="{% url 'isler' ktgr.slug %}"><h6>{{ ktgr.kategoriAd }}</h6></a>
+            <li><a href="{% url 'isler' ktgr.slug %}"><h6>{{ ktgr.kategoriAd }}</h6></a></li>
         </ul>
     </div>
 {% endfor %}

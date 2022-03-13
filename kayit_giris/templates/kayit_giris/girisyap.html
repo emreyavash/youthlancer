@@ -5,8 +5,15 @@
 {% block content %}
 <div class="registercontainer">
     <div class="register ">
-        <form action="#" method="post" class="registerForm">			      
-            <input placeholder="Email Adresi" name="email" type="email" required="Doldurmak Zorunlu">
+        <form action="#" method="post" class="registerForm">		
+            {% csrf_token %}
+            {% if error %}
+                <div class="bg-danger">
+                    {{error}}
+                </div>
+            {% endif %}	      
+	      
+            <input placeholder="Kullanıcı Adı" name="kullanici_adi" type="text" required="Doldurmak Zorunlu">
             <input placeholder="Parola" name="parola" type="password" required="Doldurmak Zorunlu">	
             <div class="sign-up">
                 <input type="submit" value="Giriş Yap"/>

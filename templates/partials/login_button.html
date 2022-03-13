@@ -1,6 +1,20 @@
 <div class="w3l_login">
-    
-        <a href="{% url 'giris_yap' %}" class="giris">Giriş Yap</a>
-        <a href="{% url 'kayit_ol' %}" class="kayit">Kayıt Ol</a>
-   
+        {% if user.is_authenticated %}
+                <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">KATEGORİLER <b class="caret"></b></a>
+                        <ul class="dropdown-menu columns-3">
+                        <div class="row">
+                                <li><a href="{% url 'cikis' %}" class="giris">Çıkış Yap</a></li>
+                                
+                                <div class="clearfix"></div>
+                        </div>
+                        </ul>
+                 </div>
+                
+
+        {% else %}
+                <a href="{% url 'giris_yap' %}" class="giris">Giriş Yap</a>
+                <a href="{% url 'kayit_ol' %}" class="kayit">Kayıt Ol</a>
+        {% endif %}
+       
 </div>
