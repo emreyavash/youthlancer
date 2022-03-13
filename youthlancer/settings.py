@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'isler',
     'iletisim',
     'kategori',
+    'profil',
+    'kayit_giris',
 ]
 
 MIDDLEWARE = [

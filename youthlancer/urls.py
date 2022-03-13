@@ -20,8 +20,10 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('anasayfa.urls')),
-    path('',include('hakkimizda.urls')),
+    path('hakkimizda/',include('hakkimizda.urls')),
     path('is/',include('isler.urls')),
-    path('',include('iletisim.urls')),
+    path('iletisim/',include('iletisim.urls')),
     path('',include('kategori.urls')),
+    path('profil/',include('profil.urls')),
+    path('',include('kayit_giris.urls')),
 ] + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

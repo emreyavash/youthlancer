@@ -1,0 +1,26 @@
+{% load static %}
+
+<div class="navigation">
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div> 
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav kayit-navbar">
+                    <!-- class="act" seçili gösteriyor -->
+                    <li class="active"><a href="{% url 'anasayfa' %}">ANASAYFA'YA DÖN</a></li>	
+                    
+                    <li><a href="{% url 'iletisim' %}" class="girisButon">GİRİŞ YAP</a></li>
+                    <li><a href="{% url 'kayit_ol' %}" class="kayıtOlButon">KAYIT OL</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>

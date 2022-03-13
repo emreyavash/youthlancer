@@ -2,5 +2,5 @@ from unicodedata import name
 from django.urls import path
 from . import views
 urlpatterns = [
-    path('hakkimizda/',views.hakkimizda_view,name="hakkimizda"),
+    path('',views.hakkimizda_view,name="hakkimizda"),
 ]

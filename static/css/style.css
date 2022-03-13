@@ -36,12 +36,15 @@ input[type="submit"],.panel-body ul li a,.checkout-right-basket a,.additional_in
 	
 }
 .w3l_login{
+	position: absolute;
 	float:right;
-	right: 0;
+	right: 200px;
+    display: flex;
+	top: 60px;
 }
 .w3l_logo{
 	float:left;
-	margin-left:27em;
+	margin-left:27em; 
 }
 .w3l_logo h1 a{
 	font-size:1.1em;
@@ -56,13 +59,32 @@ input[type="submit"],.panel-body ul li a,.checkout-right-basket a,.additional_in
     padding-left: .5em;
 }
 .w3l_login a {
-    font-size: .8em;
-    color: #ff9b05;
-    width: 50px;
-    height: 50px;
-    display: block;
+    font-size: 0.9em;
+    color: #000;
+    width: 100px;
+    height: 40px;
+    display: flex;
     text-align: center;
+	align-items: center;
+	justify-content: center;
+	margin-left: 10px;
+}
+.w3l_login .giris:hover{
+    color: #ff9b05;
+
+}
+.w3l_login .kayit{
+    color: #ff9b05;
     border: 1px solid #ff9b05;
+	border-radius: 10px;
+
+}
+.w3l_login .kayit:hover{
+    color: #fff;
+	background-color: #ff9b05;
+    border: 1px solid #ff9b05;
+	border-radius: 10px;
+
 }
 .w3l_login a span{
 	top:1.3em;
@@ -289,8 +311,9 @@ ul.multi-column-dropdown h6 {
 	justify-content: center;
 }
 .navbar-nav > li:nth-child(1) {
-    margin-left: 7.5em;
+    margin-left: 16.5em;
 }
+
 .dropdown-menu {
     left: -50%;
 }
@@ -1346,6 +1369,27 @@ h2.resp-accordion {
     color: #212121;
     padding-left: 1.5em;
 }
+.registercontainer{
+	width: 100%;
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+}
+.register{
+	width: 800px;
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	padding: 15px;
+	margin-bottom: 20px;
+}
+.registerForm{
+	width: 500px;
+
+}
+
 .register input[type="text"],.register input[type="email"],.register input[type="password"]{
 	outline:none;
 	border:1px solid #DFDFDF;
@@ -1355,7 +1399,7 @@ h2.resp-accordion {
 	width:100%;
 	font-size:14px;
 }
-.register input[type="password"],.register input[type="email"]{
+.register input[type="password"],.register input[type="email"],.register input[type="text"]{
 	margin:1em 0 0;
 }
 div#horizontalTab ul {
@@ -4588,4 +4632,11 @@ input.question + label > span{
   100% {
     opacity: 1;
   }
+}
+
+/* Login Butonları */
+
+.butonContainer{
+	position: absolute;
+	
 }

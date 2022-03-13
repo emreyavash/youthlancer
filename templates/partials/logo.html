@@ -1,4 +1,5 @@
 {% load static %}
 <div class="w3l_logo">
     <h1><a href="{% url 'anasayfa' %}"><img src="{% static 'images/logo.svg' %}" alt="" width="300" height="80"> </a></h1>
+    {% include 'partials/login_button.html' %}
 </div>
