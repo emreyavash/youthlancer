@@ -1,16 +1,21 @@
 <div class="w3l_login">
         {% if user.is_authenticated %}
-                <div class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">KATEGORİLER <b class="caret"></b></a>
-                        <ul class="dropdown-menu columns-3">
+       
+        
+        
+        <div class="dropdown dropContainer">
+                <a href="#" class="dropdown-toggle dropdownName" data-toggle="dropdown">{{ user.first_name}} {{ user.last_name}} <b class="caret"></b></a>
+                <ul class="dropdown-menu multi-column dropdownmenu">
                         <div class="row">
-                                <li><a href="{% url 'cikis' %}" class="giris">Çıkış Yap</a></li>
-                                
-                                <div class="clearfix"></div>
+        
+                                <li> <a href="{% url 'profil' user.username %}" class="giris">Profilim</a></li>
+                                <li> <a href="{% url 'hesap-ayarlari' user.username %}" class="giris">Hesap Ayarları</a></li>
+                                <li><a href="{% url 'cikis' %}"class="giris" >Çıkış Yap</a></li>
                         </div>
-                        </ul>
-                 </div>
-                
+                </ul>
+        </div>
+             
+       
 
         {% else %}
                 <a href="{% url 'giris_yap' %}" class="giris">Giriş Yap</a>
