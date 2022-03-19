@@ -39,6 +39,11 @@
         </div>
       </div>
       <div class="col-md-8">
+        <div class="text-danger">
+          {% if error %}
+            {{error}}
+          {% endif %}
+        </div>
         <div class="card">
           <div class="card-header border-bottom mb-3 d-flex d-md-none">
             <ul class="nav nav-tabs card-header-tabs nav-gap-x-1" role="tablist">
@@ -59,50 +64,69 @@
               </li>
             </ul>
           </div>
+          
           <div class="card-body tab-content">
             <div class="tab-pane active" id="profile">
               <h6>Profil Bilgileri</h6>
               <hr>
-              <form>
+              <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="form-group">
-                  <label for="fullName">İsim Soyisim</label>
-                  <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value=" {{ user.first_name }} {{ user.last_name }} " >
-                 
+                  <label for="fullName">İsim</label>
+                  <input type="text" class="form-control" id="fullName" name="isim" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value=" {{ user.first_name }}" >
+                </div>
+                <div class="form-group">
+                  <label for="fullName">Soyisim</label>
+                  <input type="text" class="form-control" id="fullName" name="soyisim"aria-describedby="fullNameHelp" placeholder="Enter your fullname" value="{{ user.last_name }} " >
                 </div>
                 <div class="form-group">
                   <label for="bio">Açıklama</label>
-                  <textarea class="form-control autosize" id="bio" placeholder="Write something about you" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;">A front-end developer that focus more on user interface design, a web interface wizard, a connector of awesomeness. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil amet excepturi dolorem est. Esse molestias asperiores nobis veniam tempore error tempora temporibus eaque maxime accusamus explicabo, dicta incidunt aliquam recusandae?</textarea>
+                  <textarea class="form-control autosize" name="aciklama" id="bio" placeholder="Write something about you" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;">A front-end developer that focus more on user interface design, a web interface wizard, a connector of awesomeness. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil amet excepturi dolorem est. Esse molestias asperiores nobis veniam tempore error tempora temporibus eaque maxime accusamus explicabo, dicta incidunt aliquam recusandae?</textarea>
                 </div>
                 <div class="form-group">
-                  <label for="url">Profil Resmi</label>
-                  <input type="file" class="form-control pb-2" id="url" placeholder="Enter your website address">
+                  <label for="url">Profil Fotoğrafı</label>
+                  <input type="file" accept="image/*" class="form-control pb-2" name="profil-foto" id="url" value="{{kullanici.kullanici_profil}}">
+                  
                 </div>
-                <div class="row">
-                    <div class="form-group mx-3">
-                        <label for="location">Şehir</label>
-                        <select class="form-select form-select-sm form-control" aria-label=".form-select-sm example" id='location'>
-                          <option selected>Open this select menu</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
+                <div class="form-group">
+                  <label for="url">Doğum Tarihi</label>
+                  <input type="date" class="form-control pb-2" name="dogum_gunu" id="url" data-date-format="YYYY-MM-DD" value="{{kullanici.dogum_gunu|date:'Y-m-d'}}">
+                  
+                </div>
+                  <div class="form-group">
+                      <label for="location">Şehir{{kullanici.sehir}}</label>
+                      <select class="form-select form-select-sm form-control" aria-label=".form-select-sm example" name="sehir" id='location'>
+                        {% for sehir in sehirler %}
+                        {% if kullanici.sehir == sehir  %}
+                          <option value="{{kullanici.sehir.id}}" selected> {{kullanici.sehir}} </option>
+                        
+                        {% else %}
+                          <option value="{{sehir.id}}"> {{sehir.sehir}} </option>
+
+                        {% endif %}
+                        
+                        {% endfor %}
+                        
+                      </select>
+                    </div>
+                    <div class="form-group ">
+                          <label for="location">Üniversite </label>
+                        <select class="form-select form-select-sm form-control" aria-label=".form-select-sm example"  name="universite" id='location'>
+                          {% for uni in universite  %}
+                          {% if kullanici.universite == uni %}
+                            <option value="{{kullanici.universite.id}}" selected>{{kullanici.universite}}</option>
+                          {% else %}
+                            <option value="{{uni.id}}">{{uni.universite}}</option>
+                          {% endif %}
+                         
+                          {% endfor %}
                         </select>
                       </div>
-                      <div class="form-group mx-5">
-                          <label for="location">Üniversite</label>
-                          <select class="form-select form-select-sm form-control" aria-label=".form-select-sm example" id='location'>
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                          </select>
-                        </div>
-                </div>
-                
+               
                 <div class="form-group small text-muted">
                   All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears.
                 </div>
-                <button type="button" class="btn btn-primary">Kaydet</button>
-                <button type="reset" class="btn btn-light">Reset Changes</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
               </form>
             </div>
             <div class="tab-pane" id="account">
@@ -131,6 +155,7 @@
                   <input type="password" class="form-control" placeholder="Eski Parolanı Gir">
                   <input type="password" class="form-control mt-1" placeholder="Yeni Parola">
                   <input type="password" class="form-control mt-1" placeholder="Yeni Parolanı Onayla">
+                  <button class="btn btn-info mt-3" type="button">Parola Değiştir</button>
                 </div>
               </form>
               <hr>
