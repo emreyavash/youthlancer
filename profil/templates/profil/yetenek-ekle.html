@@ -1,0 +1,139 @@
+{% extends "profil/base.html" %}
+{% block title %}Yetenek Ekle{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="container">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="main-breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'profil' user.username %}">{{ user.first_name}} {{ user.last_name}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Yetenek Ekle</li>
+      </ol>
+    </nav>
+    <!-- /Breadcrumb -->
+    
+    <div class="row gutters-sm">
+      
+      <div class="col-md-8">
+        <div class="text-danger">
+          {% if error %}
+            {{error}}
+          {% endif %}
+        </div>
+        <div class="card">
+       
+          <div class="card-body tab-content">
+            <div class="tab-pane active" id="yetenek">
+
+                <h6>Yetenek Ekle</h6>
+                <hr>
+                <form method="post" action="{% url 'yetenekEkle' user.username %}"      enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group ">
+                    <label for="location">Yetenekler</label>
+                  <select class="form-select form-select-sm form-control" aria-label=".form-select-sm example"  name="yetenek" id='location'>
+                    {% for yetenek in yetenekler  %}
+                  lanici.universite}}</option>
+                    
+                      <option value="{{yetenek.id}}">{{yetenek.ad}}</option>
+                  
+                  
+                    {% endfor %}
+                  </select>
+                </div>   
+
+                <div class="form-group">
+                  <label for="yetenek">Yetenek Seviyesi</label>
+                  <input type="number" min="0" max="100" class="form-control" id="yetenek" name="yetenek_seviye" aria-describedby="yetenek-seviye" placeholder="0-100"  >
+                </div>
+                
+              
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </form>
+
+                <div class="mt-5">
+                    <h3>Eklenen Yetenekler</h3>
+                </div>
+                {% if yetenek_yazi %}
+                    {{yetenek_yazi}}
+                {% else %}
+                    {% include 'profil/partials/yetenek-tablo.html' with kullanici_yetenek=kullanici_yetenek %}
+                {% endif %}
+                
+            </div>
+         
+          </div>
+
+  </div>
+{% endblock %}
+
+{% comment %} <div class="tab-pane active" id="yetenek">
+
+  <h6>Yetenek Ekle</h6>
+  <hr>
+  <form method="post" action="{% url 'yetenekEkle' user.username %}"      enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="form-group ">
+      <label for="location">Yetenekler</label>
+    <select class="form-select form-select-sm form-control" aria-label=".form-select-sm example"  name="yetenek" id='location'>
+      {% for yetenek in yetenekler  %}
+    lanici.universite}}</option>
+      
+        <option value="{{yetenek.id}}">{{yetenek.ad}}</option>
+    
+    
+      {% endfor %}
+    </select>
+  </div>   
+
+  <div class="form-group">
+    <label for="yetenek">Yetenek Seviyesi</label>
+    <input type="number" min="0" max="100" class="form-control" id="yetenek" name="yetenek_seviye" aria-describedby="yetenek-seviye" placeholder="0-100"  >
+  </div>
+  
+
+      <button type="submit" class="btn btn-primary">Kaydet</button>
+  </form>
+
+  <div class="mt-5">
+      <h3>Eklenen Yetenekler</h3>
+  </div>
+  {% if yetenek_yazi %}
+      {{yetenek_yazi}}
+  {% else %}
+      {% include 'profil/partials/yetenek-tablo.html' with kullanici_yetenek=kullanici_yetenek %}
+  {% endif %}
+  
+</div>
+<div class="tab-pane" id="portfolyo">
+
+<h6>Portfolyo Ekle</h6>
+<hr>
+<form method="post" action="{% url 'portfoyEkle' user.username %}" enctype="multipart/form-data">
+  <div class="form-group">
+    {% csrf_token %}
+    <label class="d-block">Portfolyo Açıklama</label>
+    <textarea class="form-control mt-1" name="portfolyo_aciklama" id="" ></textarea>    
+
+  
+  </div>
+  <div class="form-group">
+    <label for="yetenek">Portfoy Fotoğraf</label>
+    <input type="file" accept="image/*" class="form-control-file" id="yetenek" name="portfoy_foto" aria-describedby="portfoy_foto"  >
+  </div>
+  <button class="btn btn-info mt-3" type="submit">Kaydet</button>
+</form>
+
+<div class="mt-5">
+  <h3>Eklenen Yetenekler</h3>
+</div>
+{% if portfoy_bos %}
+    {{portfoy_bos}}
+{% else %}
+    {% include 'profil/partials/portfoy-tablo.html'%}
+{% endif %}
+
+
+</div> {% endcomment %}

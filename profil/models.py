@@ -1,4 +1,5 @@
 from distutils.command.upload import upload
+from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
@@ -32,4 +33,18 @@ class Kullanici(models.Model):
         super().save(*args, **kwargs)
 
 class Yetenekler(models.Model):
-    pass
+    ad = models.CharField(max_length=200)
+    
+class Yetenek_Kullanici(models.Model):
+    user=models.ForeignKey(User,on_delete=models.DO_NOTHING,null=False,blank=True)
+    yetenek = models.ForeignKey(Yetenekler,on_delete=models.DO_NOTHING,null=False,blank=True) 
+    yetenek_seviye = models.SmallIntegerField()
+
+class Portfoy_Kullanici(models.Model):
+    user=models.ForeignKey(User,on_delete=models.DO_NOTHING,null=False,blank=True)
+    aciklama = models.TextField()
+    fotograf = models.ImageField(upload_to='portfoy',null=True)
+
+class Fotograf_Kullanici(models.Model):
+    user=models.ForeignKey(User,on_delete=models.DO_NOTHING,null=False,blank=True)
+    fotograf = models.ImageField(upload_to='fotograf',null=True)

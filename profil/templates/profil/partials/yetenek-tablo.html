@@ -1,0 +1,20 @@
+<table class="table">
+   
+    <thead>
+      <tr>
+        <th scope="col">Yetenek</th>
+        <th scope="col">Sevİye</th>
+        <th scope="col">Sİl</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for ky in kullanici_yetenek %}
+        <tr>
+            <td>{{ ky.yetenek.ad }}</td>
+            <td>{{ ky.yetenek_seviye }}</td>
+            <td><a href="{% url 'yetenek_sil' ky.user ky.yetenek.id %}" class="btn btn-danger text-light">Sil</a></td>
+        </tr>
+      {% endfor %}
+     
+    </tbody>
+  </table>

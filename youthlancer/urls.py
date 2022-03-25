@@ -24,6 +24,6 @@ urlpatterns = [
     path('is/',include('isler.urls')),
     path('iletisim/',include('iletisim.urls')),
     path('',include('kategori.urls')),
-    path('profil/',include('profil.urls')),
+    path('',include('profil.urls')),
     path('',include('kayit_giris.urls')),
 ] + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

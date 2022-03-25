@@ -1,0 +1,18 @@
+<table class="table">
+   
+    <thead>
+      <tr>
+        <th scope="col">Fotoğraf</th>
+        <th scope="col">Sİl</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for f in fotograf %}
+        <tr>
+            <td>{{ f.fotograf.url }}</td>
+            <td><a href="{% url 'fotograf_sil' f.user f.id %}" class="btn btn-danger text-light">Sil</a></td>
+        </tr>
+      {% endfor %}
+     
+    </tbody>
+  </table>

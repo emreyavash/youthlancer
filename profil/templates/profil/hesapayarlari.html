@@ -81,7 +81,7 @@
                 </div>
                 <div class="form-group">
                   <label for="bio">Açıklama</label>
-                  <textarea class="form-control autosize" name="aciklama" id="bio" placeholder="Write something about you" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;">A front-end developer that focus more on user interface design, a web interface wizard, a connector of awesomeness. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil amet excepturi dolorem est. Esse molestias asperiores nobis veniam tempore error tempora temporibus eaque maxime accusamus explicabo, dicta incidunt aliquam recusandae?</textarea>
+                  <textarea class="form-control autosize" name="aciklama" id="bio" placeholder="Write something about you" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;"></textarea>
                 </div>
                 <div class="form-group">
                   <label for="url">Profil Fotoğrafı</label>
@@ -94,7 +94,7 @@
                   
                 </div>
                   <div class="form-group">
-                      <label for="location">Şehir{{kullanici.sehir}}</label>
+                      <label for="location">Şehir</label>
                       <select class="form-select form-select-sm form-control" aria-label=".form-select-sm example" name="sehir" id='location'>
                         {% for sehir in sehirler %}
                         {% if kullanici.sehir == sehir  %}

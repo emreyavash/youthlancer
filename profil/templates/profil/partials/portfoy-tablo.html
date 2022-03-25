@@ -1,0 +1,20 @@
+<table class="table">
+   
+    <thead>
+      <tr>
+        <th scope="col">Açıklama</th>
+        <th scope="col">Fotoğraf</th>
+        <th scope="col">Sİl</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for p in portfoy %}
+        <tr>
+            <td>{{ p.aciklama }}  </td>
+            <td>{{ p.fotograf.url }}</td>
+            <td><a href="{% url 'portfoy_sil' p.user p.id %}" class="btn btn-danger text-light">Sil</a></td>
+        </tr>
+      {% endfor %}
+     
+    </tbody>
+  </table>

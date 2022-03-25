@@ -31,9 +31,11 @@
       </div>
       <!-- Header -->
 
+      
       <div class="row">
+     
         <div class="col">
-
+         
           <!-- Info -->
           <div class="card mb-4">
             <div class="card-body">
@@ -61,18 +63,6 @@
 
               
 
-              <h6 class="my-3">İlgi Alanı</h6>
-
-              <div class="row mb-2">
-                <div class="col-md-3 text-muted">Bildikleri:</div>
-                <div class="col-md-9">
-                  <a href="javascript:void(0)" class="text-body">Django</a>,
-                  <a href="javascript:void(0)" class="text-body">Html</a>,
-                  <a href="javascript:void(0)" class="text-body">CSS</a>,
-                  <a href="javascript:void(0)" class="text-body">Javascript</a>
-                </div>
-              </div>
-
              
 
             </div>
@@ -80,41 +70,29 @@
           </div>
           <!-- / Info -->
           <!-- Skills -->
+          <div class="mb-3 right" >
+            <a href="{% url 'yetenekEkle' user.username %}" class="btn btn-warning">Yetenek Ekle</a>
+          </div>
           <div class="card mb-4">
-            <div class="card-header">
-              <div class="row">
-                <div class="col-md-9">Yetenekler</div>
-                <div class="col-md-3"><a href="javascript:void(0)" class="text-muted">Yetenek Ekle</a></div>
+            <div class="card-header">Yetenekler</div>
+            <div class="card-body ">
+              {% if yetenek_yazi %}
+                {{yetenek_yazi}}
+              {% else %}
+                {% for ky in kullanici_yetenek %}
+                  <div class="mb-1">{{ky.yetenek.ad}} - <small class="text-muted">{{ky.yetenek_seviye}}%</small></div>
+                  <div class="progress mb-3" style="height: 4px;">
+                    <div class="progress-bar bg-success" style="width: {{ky.yetenek_seviye}}%;"></div>
+                  </div>
+                {% endfor %}
+              {% endif %}
               </div>
-            </div>
-            <div class="card-body">
-
-              <div class="mb-1">HTML - <small class="text-muted">80%</small></div>
-              <div class="progress mb-3" style="height: 4px;">
-                <div class="progress-bar bg-warning" style="width: 80%;"></div>
-              </div>
-
-              <div class="mb-1">CSS - <small class="text-muted">95%</small></div>
-              <div class="progress mb-3" style="height: 4px;">
-                <div class="progress-bar bg-warning" style="width: 95%;"></div>
-              </div>
-
-              <div class="mb-1">Javascript - <small class="text-muted">90%</small></div>
-              <div class="progress mb-3" style="height: 4px;">
-                <div class="progress-bar bg-warning" style="width: 90%;"></div>
-              </div>
-
-              <div class="mb-1">UI/UX - <small class="text-muted">80%</small></div>
-              <div class="progress" style="height: 4px;">
-                <div class="progress-bar bg-warning" style="width: 80%;"></div>
-              </div>
-
-            </div>
-      
           </div>
           <!-- / Skills -->
           <!-- Posts -->
-
+          <div class="mb-3 right" >
+            <a href="{% url 'portfoyEkle' user.username %}" class="btn btn-warning">Portfolyo Ekle</a>
+          </div>
           <div class="card mb-4">
             <div class="card-header text-center p-0">
               <div class="row no-gutters row-bordered row-border-light">
@@ -124,89 +102,32 @@
                
               </div>
             </div>
-            <div class="card-body">
-              <p>
-                Aliquam varius euismod lectus, vel consectetur nibh tincidunt vitae. In non dignissim est. Sed eu ligula metus. Vivamus eget quam sit amet risus venenatis laoreet ut vel magna. Sed dui ligula, tincidunt in nunc eu, rhoncus iaculis nisi.
-              </p>
-              <p>
-                Sed et convallis odio, vel laoreet tellus. Vivamus a leo eu metus porta pulvinar. Pellentesque tristique varius rutrum.
-              </p>
-              <div class="ui-bordered">
-                <a href="javascript:void(0)" class="ui-rect ui-bg-cover text-white" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');">
-                  <div class="d-flex justify-content-start align-items-end ui-rect-content p-2">
-                    <div class="bg-dark rounded text-white small py-1 px-2">
-                      <i class="ion ion-md-link"></i> &nbsp; external.com/some/page
-                    </div>
-                  </div>
-                </a>
-                <div class="p-4">
-                  <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h5>
-                  Duis ut quam nec mi bibendum finibus et id tortor. Maecenas tristique dolor enim, sed tristique sem cursus et. Etiam tempus iaculis blandit. Vivamus a justo a elit bibendum pulvinar ut non erat. Cras in purus sed leo mattis consequat viverra id arcu.
-                </div>
-              </div>
-            </div>
            
           </div>
-
+          {% if portfolyo_yazi %}
           <div class="card mb-4">
             <div class="card-body">
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus finibus commodo bibendum. Vivamus laoreet blandit odio, vel finibus quam dictum ut.
+                {{portfolyo_yazi}}
               </p>
-              <a href="javascript:void(0)" class="ui-rect ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></a>
+             
             </div>
-            <div class="card-footer">
-              <a href="javascript:void(0)" class="d-inline-block text-muted">
-                <small class="align-middle">
-                  <strong>123</strong> Likes</small>
-              </a>
-              <a href="javascript:void(0)" class="d-inline-block text-muted ml-3">
-                <small class="align-middle">
-                  <strong>12</strong> Comments</small>
-              </a>
-              <a href="javascript:void(0)" class="d-inline-block text-muted ml-3">
-                <i class="ion ion-md-share align-middle"></i>&nbsp;
-                <small class="align-middle">Repost</small>
-              </a>
-            </div>
-          </div>
-
+         
+            
+          {% else %}
+          
+          {% for p in portfolyo  %}
           <div class="card mb-4">
             <div class="card-body">
               <p>
-                Aliquam viverra ornare tincidunt. Vestibulum sit amet vestibulum quam. Donec eu est non velit rhoncus interdum eget vel lorem.
+                {{p.aciklama}}
               </p>
-
-              <div class="border-top-0 border-right-0 border-bottom-0 ui-bordered pl-3 mt-4 mb-2">
-                <div class="media mb-3">
-                  <img src="https://bootdey.com/img/Content/avatar/avatar4.png" class="d-block ui-w-40 rounded-circle" alt="">
-                  <div class="media-body ml-3">
-                    Kenneth Frazier
-                    <div class="text-muted small">3 days ago</div>
-                  </div>
-                </div>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus finibus commodo bibendum. Vivamus laoreet blandit odio, vel finibus quam dictum ut.
-                </p>
-                <a href="javascript:void(0)" class="ui-rect ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></a>
-              </div>
-              <a href="javascript:void(0)" class="text-muted small">Reposted from @kfrazier/posts/123</a>
+              <a href="javascript:void(0)" class="ui-rect ui-bg-cover" style="background-image: url({{p.fotograf.url}});"></a>
             </div>
-            <div class="card-footer">
-              <a href="javascript:void(0)" class="d-inline-block text-muted">
-                <small class="align-middle">
-                  <strong>123</strong> Likes</small>
-              </a>
-              <a href="javascript:void(0)" class="d-inline-block text-muted ml-3">
-                <small class="align-middle">
-                  <strong>12</strong> Comments</small>
-              </a>
-              <a href="javascript:void(0)" class="d-inline-block text-muted ml-3">
-                <i class="ion ion-md-share align-middle"></i>&nbsp;
-                <small class="align-middle">Repost</small>
-              </a>
-            </div>
+         
           </div>
+          {% endfor %}
+          {% endif %}
 
           <!-- / Posts -->
 
@@ -217,68 +138,31 @@
           
 
           <!-- Photos -->
+          <div class="mb-3 right" >
+            <a href="{% url 'fotografEkle' user.username %}" class="btn btn-warning">Fotoğraf Ekle</a>
+          </div>
           <div class="card mb-4">
             <div class="card-header with-elements">
-              <span class="card-header-title">Photos</span>
+              <span class="card-header-title">Fotoğraflar</span>
               <div class="card-header-elements ml-2">
-                <small class="text-muted">54</small>
+                <small class="text-muted">{{fotograf_sayi}}</small>
               </div>
-              <div class="card-header-elements ml-md-auto">
-                <a href="javascript:void(0)" class="btn btn-default md-btn-flat btn-xs">Show More</a>
-              </div>
+             
             </div>
+           
+            {% if fotograf_yazi %}
+            <p>{{fotograf_yazi}}</p>
+          {% else %}
             <div class="row no-gutters align-items-start pt-1 pl-1">
-
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-              <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
-                <span class="d-block ui-square ui-bg-cover" style="background-image: url('https://via.placeholder.com/350x180/E6E6FA/000000');"></span>
-              </a>
-
+              
+                {% for f in fotograflar %}
+                <a href="javascript:void(0)" class="d-block col-3 col-sm-2 col-lg-3 pr-1 pb-1">
+                  <span class="d-block ui-square ui-bg-cover" style="background-image: url({{f.fotograf.url}});"></span>
+                </a>
+                {% endfor %}
+             
             </div>
+            {% endif %}
           </div>
           <!-- / Photos -->
 

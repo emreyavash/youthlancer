@@ -1,0 +1,39 @@
+{% extends "profil/base.html" %}
+{% block title %}Portfoy Ekle{% endblock title %}
+
+{% load static %}
+{% block content %}
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'profil' user.username %}">{{ user.first_name}} {{ user.last_name}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Profilim</li>
+  </ol>
+</nav>
+<div class="form-control">
+  <h6>Fotograf Ekle</h6>
+  <hr>
+  <div class="text-danger">
+    {% if error %}
+      {{error}}
+    {% endif %}
+  </div>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="yetenek">Fotoğraf</label>
+      <input type="file" accept="image/*" class="form-control-file" id="yetenek" name="fotograf" aria-describedby="fotograf"  >
+    </div>
+    <button class="btn btn-info mt-3" type="submit">Kaydet</button>
+  </form>
+ 
+  <div class="mt-5">
+    <h3>Eklenen Fotograflar</h3>
+  </div>
+  {% if fotograf_yazi %}
+      {{fotograf_yazi}}
+  {% else %}
+      {% include 'profil/partials/fotograf-tablo.html'%}
+  {% endif %}
+  {% endblock %}
+</div>
