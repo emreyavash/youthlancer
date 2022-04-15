@@ -21,80 +21,39 @@
     </div>
     <div class="basvurma">
         <div class="container">
+            <form action="" method="post">
             <div class="row">
-                <div class="col-7">
-                    <div class="select-part">
-                        <div class="select-item">
-                            <h5>Hangi Üniversitede Okuyorsun ?</h5>
-                            <select class="form-select" aria-label="Default select example">
-                                <option value="1">Akdeniz Üniversitesi</option>
-                                <option value="2">Sakarya Üniversitesi</option>
-                                <option value="3">Ege Üniversitesi</option>
-                            </select>
+               
+                    {% csrf_token %}
+                    <div class="col-7">
+                    
+                        
+                        <div class="select-part">
+                            <div class="select-item">
+                                <h5>Alanını Yaz</h5>
+                                <input class="form-control" type="text" name='alan' placeholder="Tasarımcı vs" aria-label="default input example">
+                            </div>
                         </div>
-                    </div>
-                    <div class="select-part">
-                        <div class="select-item">
-                            <h5>Hangi Şehirde Yaşıyorsun ?</h5>
-                            <select class="form-select" aria-label="Default select example">
-                                <option value="1">İzmir</option>
-                                <option value="2">İstanbul</option>
-                                <option value="3">Antalya</option>
-                            </select>
+                        <div class="select-part">
+                            <div class="select-item">
+                                <h5 class="form-label" for="exampleFormControlTextarea1">Neden Seni Seçmeli  ?</h5>
+                                <div class="mb-3">
+                                    <textarea class="form-control" name='secim_aciklama' id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="select-part">
-                        <div class="select-item">
-                            <h5>Kategori</h5>
-                            <select class="form-select" aria-label="Default select example">
-                                <option value="1">Yazılım & Teknoloji</option>
-                                <option value="2">Grafik & Tasarım</option>
-                                <option value="3">Ses & Müzik</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="select-part">
-                        <div class="select-item">
-                            <h5>Alanını Yaz</h5>
-                            <input class="form-control" type="text" placeholder="Tasarımcı vs" aria-label="default input example">
-                        </div>
-                    </div>
-                    <div class="select-part">
-                        <div class="select-item">
-                            <h5 class="form-label" for="exampleFormControlTextarea1">Neden Seni Seçmeli ?</h5>
-                            <div class="mb-3">
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                              </div>
-                        </div>
-                    </div>
-                    <div class="select-part">
+                        <div class="select-part">
 
-                        <div class="simpleCart_shelfItem">
-                            <p>Ücret: <i class="item_price">2500 ₺</i></p>
-                            <p><a class="item_add" href="{% url 'icerik' %}">Başvur</a></p>
+                            <div class="simpleCart_shelfItem">
+                                <p><button class="item_add" type="submit">Başvur</button></p>
+                            </div>
                         </div>
+
                     </div>
-
-                </div>
-                <div class="col-5">
-                   <div class="kisisel-bilgiler">
-                       <div class="kisiselbox">
-                            <h5 class="form-label" for="exampleFormControlTextarea1">Email</h5>
-                            <input class="form-control" type="text" value="emreyavas67@gmail.com" aria-label="Email Adresi"  readonly>
-
-                       </div>
-                        <div class="kisiselbox">
-                            <h5 class="form-label" for="exampleFormControlTextarea1">Telefon</h5>
-                            <input class="form-control" type="text" value="05360530299" aria-label="Telefon Numarası"  readonly>
-                        </div>
-                        <div class="kisiselbox">
-                            <h5 class="form-label" for="exampleFormControlTextarea1">Iban</h5>
-                            <input type="number" class="form-control" id="staticEmail" >
-                        </div>
-                   </div>
-                </div>
-            
+                   
+               
             </div>
+        </form>
         </div>
     </div>
     {% include 'partials/footer.html' %}

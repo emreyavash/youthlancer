@@ -14,6 +14,7 @@ def profil_view(request,username):
         fotograflar = Fotograf_Kullanici.objects.filter(user = user)
         if kullanici_yetenek.exists() or portfolyo.exists() or fotograflar.exists():
             context={
+            'user_mi':kullanici,
             'kullanici_yetenek':kullanici_yetenek,
             'kullanici':kullanici,
             'portfolyo':portfolyo,

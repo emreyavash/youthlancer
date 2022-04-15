@@ -8,7 +8,7 @@
     <nav aria-label="breadcrumb" class="main-breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'profil' user.username %}">{{ user.first_name}} {{ user.last_name}}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'profil'  kullanici.user.username %}">{{  kullanici.user.first_name}} {{  kullanici.user.last_name}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">Hesap Ayarları</li>
       </ol>
     </nav>
@@ -73,11 +73,11 @@
                 {% csrf_token %}
                 <div class="form-group">
                   <label for="fullName">İsim</label>
-                  <input type="text" class="form-control" id="fullName" name="isim" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value=" {{ user.first_name }}" >
+                  <input type="text" class="form-control" id="fullName" name="isim" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value=" {{  kullanici.user.first_name }}" >
                 </div>
                 <div class="form-group">
                   <label for="fullName">Soyisim</label>
-                  <input type="text" class="form-control" id="fullName" name="soyisim"aria-describedby="fullNameHelp" placeholder="Enter your fullname" value="{{ user.last_name }} " >
+                  <input type="text" class="form-control" id="fullName" name="soyisim"aria-describedby="fullNameHelp" placeholder="Enter your fullname" value="{{  kullanici.user.last_name }} " >
                 </div>
                 <div class="form-group">
                   <label for="bio">Açıklama</label>
@@ -135,7 +135,7 @@
               <form>
                 <div class="form-group">
                   <label for="username">Kullanıcı Adı</label>
-                  <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Enter your username" value="{{ user.username }}">
+                  <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Enter your username" value="{{  kullanici.user.username }}">
                   <small id="usernameHelp" class="form-text text-muted">After changing your username, your old username becomes available for anyone else to claim.</small>
                 </div>
                 <hr>

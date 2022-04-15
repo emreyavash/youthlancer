@@ -20,7 +20,7 @@ class Kullanici(models.Model):
     kullanici_profil=models.ImageField(upload_to='kullanici',null=True)
     dogum_gunu = models.DateField(null=True)
     freelancer = models.BooleanField(default=False)
-    telefon = models.IntegerField(null=True)
+    telefon = models.PositiveBigIntegerField(null=True)
     isveren = models.BooleanField(default=False)
     sehir = models.ForeignKey(Sehir,on_delete=models.SET_NULL,null=True)
     universite = models.ForeignKey(Universite,on_delete=models.SET_NULL,null=True)

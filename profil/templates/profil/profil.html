@@ -9,8 +9,8 @@
         <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
-              <li class="breadcrumb-item"><a href="{% url 'profil' user.username %}">{{ user.first_name}} {{ user.last_name}}</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Profilim</li>
+              <li class="breadcrumb-item"><a href="{% url 'profil' kullanici.user.username %}">{{ kullanici.user.first_name}} {{ kullanici.user.last_name}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Profil</li>
             </ol>
           </nav>
       <!-- Header -->
@@ -18,7 +18,7 @@
         <div class="media col-md-10 col-lg-8 col-xl-7 py-5 mx-auto">
           <img src="{{kullanici.kullanici_profil.url}}" alt="" class="d-block ui-w-100 rounded-circle">
           <div class="media-body ml-5">
-            <h4 class="font-weight-bold mb-4">{{ user.first_name}} {{ user.last_name}}</h4>
+            <h4 class="font-weight-bold mb-4">{{ kullanici.user.first_name}} {{ kullanici.user.last_name}}</h4>
 
             <div class="text-muted mb-4">
              {{kullanici.aciklama}}
@@ -71,7 +71,12 @@
           <!-- / Info -->
           <!-- Skills -->
           <div class="mb-3 right" >
-            <a href="{% url 'yetenekEkle' user.username %}" class="btn btn-warning">Yetenek Ekle</a>
+            {% if user_mi.user.username == user.username %}
+            <a href="{% url 'yetenekEkle' kullanici.user.username %}" class="btn btn-warning">Yetenek Ekle  </a>
+            {% else %}
+
+            {% endif %}
+        
           </div>
           <div class="card mb-4">
             <div class="card-header">Yetenekler</div>
@@ -91,7 +96,11 @@
           <!-- / Skills -->
           <!-- Posts -->
           <div class="mb-3 right" >
-            <a href="{% url 'portfoyEkle' user.username %}" class="btn btn-warning">Portfolyo Ekle</a>
+            {% if user_mi.user.username == user.username %}
+            <a href="{% url 'portfoyEkle' kullanici.user.username %}" class="btn btn-warning">Portfolyo Ekle</a>
+            {% else %}
+            {% endif %}
+            
           </div>
           <div class="card mb-4">
             <div class="card-header text-center p-0">
@@ -139,7 +148,11 @@
 
           <!-- Photos -->
           <div class="mb-3 right" >
-            <a href="{% url 'fotografEkle' user.username %}" class="btn btn-warning">Fotoğraf Ekle</a>
+            {% if user_mi.user.username == user.username  %}
+            <a href="{% url 'fotografEkle' kullanici.user.username %}" class="btn btn-warning">Fotoğraf Ekle</a>
+            {% else %}
+            {% endif %}
+           
           </div>
           <div class="card mb-4">
             <div class="card-header with-elements">

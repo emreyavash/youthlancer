@@ -6,7 +6,7 @@
 <nav aria-label="breadcrumb" class="main-breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
-    <li class="breadcrumb-item"><a href="{% url 'profil' user.username %}">{{ user.first_name}} {{ user.last_name}}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'profil' user.username %}">{{ user.first_name}} {{  user.last_name}}</a></li>
     <li class="breadcrumb-item active" aria-current="page">Profilim</li>
   </ol>
 </nav>

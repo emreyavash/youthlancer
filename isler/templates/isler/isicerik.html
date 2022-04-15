@@ -15,8 +15,8 @@
 		<div class="container">
 			<ul>
 				<li><a href="{% url 'anasayfa' %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Anasayfa</a> <i>/</i></li>
-				<li><a href=""></span> Yazılım & Teknoloji</a> <i>/</i></li>
-				<li>Web Sitesi Yaptırmak İstiyorum</li>
+				<li><a href="{% url 'isler' is.kategori.slug %}"></span> {{is.kategori.kategoriAd}}</a> <i>/</i></li>
+				<li>{{is.is_isim}}</li>
 			</ul>
 		</div>
 	</div>
@@ -28,14 +28,14 @@
 			<div class="col-md-4 single-left">
 				<div class="flexslider">
 					<ul class="slides">
-						<li data-thumb="{% static 'images/yazılımteknoloji.jpg' %}">
-							<div class="thumb-image"> <img src="{% static 'images/yazılımteknoloji.jpg' %}" data-imagezoom="true" class="img-responsive"> </div>
+						<li data-thumb="{{is.resim1.url}}">
+							<div class="thumb-image"> <img src="{{is.resim1.url}}" data-imagezoom="true" class="img-responsive"> </div>
 						</li>
-						<li data-thumb="{% static 'images/yazılım.jpg' %}">
-							 <div class="thumb-image"> <img src="{% static 'images/yazılım.jpg' %}" data-imagezoom="true" class="img-responsive"> </div>
+						<li data-thumb="{{is.resim2.url}}">
+							 <div class="thumb-image"> <img src="{{is.resim2.url}}" data-imagezoom="true" class="img-responsive"> </div>
 						</li>
-						<li data-thumb="{% static 'images/youthlancerLogo.jfif' %}">
-						   <div class="thumb-image"> <img src="{% static 'images/youthlancerLogo.jfif' %}" data-imagezoom="true" class="img-responsive"> </div>
+						<li data-thumb="{{is.resim3.url}}">
+						   <div class="thumb-image"> <img src="{{is.resim3.url}}" data-imagezoom="true" class="img-responsive"> </div>
 						</li> 
 					</ul>
 				</div>
@@ -57,42 +57,45 @@
 				<!-- //zooming-effect -->
 			</div>
 			<div class="col-md-8 single-right">
-				<h3>Web Sitesi Yaptırmak İstiyorum</h3>
+				<h3>{{is.is_isim}}</h3>
 					<div class="additional_info_sub_grids">
 						<div class="col-xs-2 additional_info_sub_grid_left">
 							<img src="{% static 'images/1.png' %}" alt=" " class="img-responsive" />
 						</div>
 						<div class="col-xs-10 additional_info_sub_grid_right">
 							<div class="additional_info_sub_grid_rightl">
-							<a href="single.html">Fatma Y.</a>
-								<h5>İş Veren</h5>
+							<a href="single.html">{{is.user.first_name|first}}. {{is.user.last_name|first}}.</a>
+								<h5>İş Veren </h5>
 								
 							</div>
-							<p><i class="item_price" style="font-size:25px">2500 ₺</i></p>
+							<p><i class="item_price" style="font-size:25px">{{is.fiyat}} ₺</i></p>
 							
 							<div class="clearfix"> </div>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
 					<div class="description">
-						<h5><i>İş Açıklaması</i></h5>
-						<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
-							eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-							Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut 
-							odit aut fugit, sed quia consequuntur magni dolores eos qui 
-							ratione voluptatem sequi nesciunt.</p>
+						<h5><i>İş Açıklaması </i></h5>
+						<p>{{is.is_aciklama}}</p>
 					</div>
 					<div class="description">
 						<h5><i>İşin Başlangıç Süresi</i></h5>
-						<p>25-02-2022</p>
+						<p>{{is.is_baslangic}}</p>
 					</div>
 					<div class="description">
 						<h5><i>İşin Bitiş Süresi</i></h5>
-						<p>28-02-2022</p>
+						<p>{{is.is_bitis}}</p>
 					</div>
+					{% if user_bilgi.username == is.user.username  %}
 					<div class="simpleCart_shelfItem">
-							<p><a class="item_add" href="{% url 'basvur' %}">Başvur</a></p>
-						</div>
+						<p>Kendi işine teklif veremezsin</p>
+					</div>
+					{% else %}
+					<div class="simpleCart_shelfItem">
+						<p><a class="item_add" href="{% url 'basvur' is.slug %}">Başvur</a></p>
+					</div>
+					{% endif %}
+					
 
 			</div>
 			<div class="clearfix"> </div>
@@ -121,40 +124,35 @@
 					
 					<div class="tab-2 resp-tab-content additional_info_grid" aria-labelledby="tab_item-1">
 						<h4>Freelancerlar</h4>
-						<div class="additional_info_sub_grids">
-							<div class="col-xs-2 additional_info_sub_grid_left">
-								<img src="{% static 'images/1.png' %}" alt=" " class="img-responsive" />
-							</div>
-							<div class="col-xs-10 additional_info_sub_grid_right">
-								<div class="additional_info_sub_grid_rightl">
-									<a href="single.html">Laura F.</a>
-									<h5>Web Developer</h5>
-									<p>Quis autem vel eum iure reprehenderit qui in ea voluptate 
-										velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat 
-										quo voluptas nulla pariatur.</p>
+						{% if error %}
+							{{error}}
+						{% else %}
+							{% for basvuran in basvuranlar  %}
+							<div class="additional_info_sub_grids">
+								<div class="col-xs-2 additional_info_sub_grid_left" >
+									<img src="{{basvuran.kullanici_bilgi.kullanici_profil.url}}" style="width:150px;height:100px;object-fit: cover" alt="profil_fotoğrafı"  class="img-responsive" />
 								</div>
-								
+								<div class="col-xs-10 additional_info_sub_grid_right">
+									<div class="additional_info_sub_grid_rightl">
+										{% if user_bilgi.username == is.user.username   %}
+										<a href="{% url 'profil' basvuran.user.username %}">{{basvuran.user.first_name|first}}. {{basvuran.user.last_name|first}}.</a>
+										{% else %}
+										<a>{{basvuran.user.first_name|first}}. {{basvuran.user.last_name|first}}.</a>
+										{% endif %}
+										
+										<h5>{{basvuran.alan}}</h5>
+										<p>{{basvuran.secim_aciklama}}</p>
+									</div>
+									
+									<div class="clearfix"> </div>
+								</div>
 								<div class="clearfix"> </div>
 							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="additional_info_sub_grids">
-							<div class="col-xs-2 additional_info_sub_grid_left">
-								<img src="{% static 'images/2.png' %}" alt=" " class="img-responsive" />
-							</div>
-							<div class="col-xs-10 additional_info_sub_grid_right">
-								<div class="additional_info_sub_grid_rightl">
-									<a href="single.html">Michael L.</a>
-									<h5>Front-End Developer</h5>
-									<p>Quis autem vel eum iure reprehenderit qui in ea voluptate 
-										velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat 
-										quo voluptas nulla pariatur.</p>
-								</div>
-								
-								<div class="clearfix"> </div>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
+							{% endfor %}
+						{% endif %}
+						
+						
+						
 						
 					</div> 		        					            	      
 				</div>	
