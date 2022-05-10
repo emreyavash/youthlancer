@@ -1,0 +1,85 @@
+{% extends "profil/base.html" %}
+{% load static %}
+{% block title %}Paylaşılan İşler{% endblock title %}
+{% block content %}
+<div class="layout-content">
+
+    <!-- Content -->
+    <div class="container flex-grow-1 container-p-y">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'profil' kullanici.username %}">{{ kullanici.first_name}} {{ kullanici.last_name}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Paylaşılan İşler</li>
+            </ol>
+          </nav>
+          {% if kullanici2.isveren %}
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Kabul Ettiğin Freelancerlar  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Reddettiğin Freelancerlar</a>
+                </li>
+                
+              
+              </ul>
+            </div>
+          </nav>
+          {% endif %}
+          {% if error %}
+          {{error}}
+          {% else %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Paylaşılan İş</th>
+                <th scope="col">İş Fiyat</th>
+                <th scope="col">Kategori</th>
+                <th scope="col">Alt Kategori</th>
+                <th scope="col">Açıklama</th>
+                <th scope="col">Başlangıç Tarihi</th>
+                <th scope="col">Bitiş Bitiş</th>
+                <th scope="col">Düzenle</th>
+                <th scope="col">Sil</th>
+              </tr>
+            </thead>
+            <tbody>
+             
+              {% for pi in paylasilan_isler %}
+              <tr>
+                <td>{{pi.is_isim |truncatechars:30}}</td>
+                <td>{{pi.fiyat}}</td>
+                <td>{{pi.kategori.kategoriAd}}</td>
+                <td>{{pi.alt_kategori.altKategoriAd}}</td>
+                <td>{{pi.is_aciklama|truncatechars:50}}</td>
+                <td>{{pi.is_baslangic}}</td>
+                <td>{{pi.is_bitis}}</td>
+               
+                <td><a class="btn btn-success text-white" href="{% url 'is_duzenle' pi.user.username pi.id%}">Düzenle</a></td>
+                <td><a class="btn btn-danger text-white" href="{% url 'paylasilan_sil' pi.id pi.user.username %}">Sil</a></td>
+
+                {% endfor %}
+                
+              </tr>
+            {% endif %}
+             
+              
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock %}
+
+<!-- loading -->
+                <!-- <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12.979 3.055c4.508.489 8.021 4.306 8.021 8.945.001 2.698-1.194 5.113-3.075 6.763l-1.633-1.245c1.645-1.282 2.709-3.276 2.708-5.518 0-3.527-2.624-6.445-6.021-6.923v2.923l-5.25-4 5.25-4v3.055zm-1.979 15.865c-3.387-.486-6-3.401-6.001-6.92 0-2.237 1.061-4.228 2.697-5.509l-1.631-1.245c-1.876 1.65-3.066 4.061-3.065 6.754-.001 4.632 3.502 8.444 8 8.942v3.058l5.25-4-5.25-4v2.92z"/></svg></td> -->
+
+                <!-- onaylanmadı -->
+                <!-- <td><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z"/></svg></td> -->
+                <!-- onaylandı -->
+                <!-- <td><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5.48 10.089l1.583-1.464c1.854.896 3.028 1.578 5.11 3.063 3.916-4.442 6.503-6.696 11.311-9.688l.516 1.186c-3.965 3.46-6.87 7.314-11.051 14.814-2.579-3.038-4.301-4.974-7.469-7.911zm14.407.557c.067.443.113.893.113 1.354 0 4.962-4.038 9-9 9s-9-4.038-9-9 4.038-9 9-9c1.971 0 3.79.644 5.274 1.723.521-.446 1.052-.881 1.6-1.303-1.884-1.511-4.271-2.42-6.874-2.42-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11c0-1.179-.19-2.313-.534-3.378-.528.633-1.052 1.305-1.579 2.024z"/></svg></td> -->

@@ -34,6 +34,14 @@
 				<div class="col-md-8 w3ls_dresses_grid_right">
 				
 					<div class="clearfix"> </div>
+					{% if kullanici.freelancer_mi  %}
+						<div class="w3ls_dresses_grid_right_grid2">
+							<a href="{% url 'is_olustur' user.username %}" class="btn btn-warning">İş Oluştur  </a>
+
+						</div>
+					{% else %}
+					{% endif %}
+					
 					{% comment %} 
 					<div class="w3ls_dresses_grid_right_grid2">
 						<div class="w3ls_dresses_grid_right_grid2_left">

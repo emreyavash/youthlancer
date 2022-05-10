@@ -1,0 +1,137 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}İşi Düzenle{% endblock title %}
+{% block content %}
+<div class="container">
+    <div class="row gutters-sm">
+        <div class="card">
+            <div class="card-body tab-content ">
+
+                <div class="tab-pane active" id="profile">
+                <h3>İşi Düzenle</h3>
+                <hr>
+                <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="fullName">İş İsmi</label>
+                    <input type="text" class="form-control" id="fullName" name="is_isim" aria-describedby="is_isim" value="{{is_bilgileri.is_isim}}" >
+                </div>
+                <div class="form-group">
+                    <label for="fullName">Fiyat</label>
+                    <input type="text" class="form-control" id="fullName" name="fiyat"aria-describedby="fiyat" value="{{is_bilgileri.fiyat}}" >
+                </div>
+                <div class="form-group">
+                    <label for="bio">Açıklama</label>
+                    <textarea class="form-control autosize" name="aciklama" id="bio" value="{{is_bilgileri.is_aciklama}}" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="url" style="display:block" >İş Fotoğrafları <p>(İlk Seçilen Fotoğraf Kapak Fotoğrafı olarak kullanılacaktır)</p></label>
+                    
+                    {% comment %} <input type="file" accept="image/*" class="form-control pb-2" name="isfoto1" id="url" value="{{is_bilgileri.resim1}}"> {% endcomment %}
+                    {% if is_bilgileri.resim1 %}
+                    <img id="image1" style="display:inline-block" src="{{is_bilgileri.resim1.url}}" width="200" height="200" />
+                    {% else %}
+                    {% endif %}
+                    {% if is_bilgileri.resim2 %}
+                    <img id="image2" style="display:inline-block" src="{{is_bilgileri.resim2.url}}" width="200" height="200" />
+                    {% else %}
+                    {% endif %}
+                    {% if is_bilgileri.resim3 %}
+                    <img id="image3" style="display:inline-block" src="{{is_bilgileri.resim3.url}}" width="200" height="200" />
+                    {% else %}
+                    {% endif %}
+                    <input id="files1" type="file" accept="image/*" class="form-control pb-2" name="isfoto1" id="url" value="{{is_bilgileri.resim1}}" />
+
+                    
+                    
+                    <input type="file" id="files2" accept="image/*" class="form-control pb-2" name="isfoto2" id="url" value="{{is_bilgileri.resim2}}">
+
+                    <input type="file" id="files3" accept="image/*" class="form-control pb-2" name="isfoto3" id="url" value="{{is_bilgileri.resim3}}">
+                    <script>
+                        document.getElementById("files1").onchange = function () {
+                            var reader = new FileReader();
+    
+                            reader.onload = function (e) {
+                                // get loaded data and render thumbnail.
+                                document.getElementById('image1').src = e.target.result;
+                            };
+    
+                            // read the image file as a data URL.
+                            reader.readAsDataURL(this.files[0]);
+                        };
+                        document.getElementById("files2").onchange = function () {
+                            var reader = new FileReader();
+    
+                            reader.onload = function (e) {
+                                // get loaded data and render thumbnail.
+                                document.getElementById('image2').src = e.target.result;
+                            };
+    
+                            // read the image file as a data URL.
+                            reader.readAsDataURL(this.files[0]);
+                        };
+                        document.getElementById("files3").onchange = function () {
+                            var reader = new FileReader();
+    
+                            reader.onload = function (e) {
+                                // get loaded data and render thumbnail.
+                                document.getElementById('image3').src = e.target.result;
+                            };
+    
+                            // read the image file as a data URL.
+                            reader.readAsDataURL(this.files[0]);
+                        };
+                        </script>
+                </div>
+                <div class="form-group">
+                    <label for="url">İş Başlangıç Tarihi</label>
+                    <input type="date" class="form-control pb-2" name="baslangic" id="url" data-date-format="YYYY-MM-DD" value="{{is_bilgileri.is_baslangic|date:'Y-m-d'}}">
+                    
+                </div>
+                <div class="form-group">
+                    <label for="url">İş Bitiş Tarihi</label>
+                    <input type="date" class="form-control pb-2" name="bitis" id="url" data-date-format="YYYY-MM-DD" value="{{is_bilgileri.is_bitis|date:'Y-m-d'}}">
+                </div>
+                <div class="form-group">
+                    <label for="location">Kategori</label>
+                    <select class="form-select form-select-sm form-control" aria-label=".form-select-sm example" name="kategori" id='location'>
+                    <option>Kategori</option>
+                    <option value="{{is_bilgileri.kategori.id}}" selected>{{is_bilgileri.kategori.kategoriAd}}</option >
+
+                    {% for k in kategori %}
+                        <option value="{{k.id}}">{{k.kategoriAd}}</option>
+                    {% endfor %}
+                    
+                    </select>
+                </div>
+                    <div class="form-group ">
+                            <label for="location">Alt Kategori </label>
+                        <select class="form-select form-select-sm form-control" aria-label=".form-select-sm example"  name="alt_kategori" id='location'>
+                            <option>Alt Kategori</option>
+                            <option value="{{is_bilgileri.alt_kategori.id}}" selected>{{is_bilgileri.alt_kategori.altKategoriAd}}</option >
+
+                            {% for ak in alt_kategori  %}
+                          
+                            <option value="{{ak.id}}">{{ak.altKategoriAd}}</option>
+                            {% endfor %}
+                        </select>
+                        </div>
+                    <div class="form-group ">
+                            <label for="location">İş Gereksinimleri </label>
+                        <select class="form-select form-select-sm form-control" aria-label=".form-select-sm example"  name="is_gereksinimleri" id='location'>
+                            {% for ig in is_gereksinimleri  %}
+                          
+                            <option value="{{ig.id}}">{{ig.gereksinim}}</option>
+                            {% endfor %}
+                        </select>
+                        </div>
+                
+           
+                <button type="submit" class="btn btn-primary  mb-5">Kaydet</button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

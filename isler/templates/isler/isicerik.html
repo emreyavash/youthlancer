@@ -79,7 +79,7 @@
 						<p>{{is.is_aciklama}}</p>
 					</div>
 					<div class="description">
-						<h5><i>İşin Başlangıç Süresi</i></h5>
+						<h5><i>İşin Başlangıç Süresi  </i></h5>
 						<p>{{is.is_baslangic}}</p>
 					</div>
 					<div class="description">
@@ -87,12 +87,31 @@
 						<p>{{is.is_bitis}}</p>
 					</div>
 					{% if user_bilgi.username == is.user.username  %}
+						<div class="simpleCart_shelfItem">
+							<p>Kendi işine teklif veremezsin.</p>
+						</div>
+					{% elif kullanici.freelancer == False %}
+						<div class="simpleCart_shelfItem">
+							<p>Freelancer değilsen başvuru yapamazsın.</p>
+						</div>
+					{% elif basvuru_error %}
 					<div class="simpleCart_shelfItem">
-						<p>Kendi işine teklif veremezsin</p>
+						<p><a class="item_add" >Başvur</a></p>
+						<h6>Daha önceki işiniz devam ediyor.</h6>
 					</div>
-					{% else %}
+					{% elif basvuran %}
+					<div class="simpleCart_shelfItem">
+						<p><a class="item_add" >Başvur</a></p>
+						<h6>Daha önce bu işe başvurdunuz.</h6>
+					</div>
+					{% elif user.is_authenticated %}
 					<div class="simpleCart_shelfItem">
 						<p><a class="item_add" href="{% url 'basvur' is.slug %}">Başvur</a></p>
+					</div>
+					
+					{% else %}
+					<div class="simpleCart_shelfItem">
+						<p><a class="item_add" href="{% url 'giris_yap' %}">Giriş Yap</a></p>
 					</div>
 					{% endif %}
 					
@@ -123,29 +142,63 @@
 
 					
 					<div class="tab-2 resp-tab-content additional_info_grid" aria-labelledby="tab_item-1">
-						<h4>Freelancerlar</h4>
+						<h4>Freelancerlar </h4>
 						{% if error %}
 							{{error}}
 						{% else %}
+							{% if is_onay.secildi_mi %}
+								<div class="text-success">İş için biri seçildi.</div>
+							{% endif %}
 							{% for basvuran in basvuranlar  %}
+							
 							<div class="additional_info_sub_grids">
-								<div class="col-xs-2 additional_info_sub_grid_left" >
-									<img src="{{basvuran.kullanici_bilgi.kullanici_profil.url}}" style="width:150px;height:100px;object-fit: cover" alt="profil_fotoğrafı"  class="img-responsive" />
-								</div>
-								<div class="col-xs-10 additional_info_sub_grid_right">
-									<div class="additional_info_sub_grid_rightl">
-										{% if user_bilgi.username == is.user.username   %}
-										<a href="{% url 'profil' basvuran.user.username %}">{{basvuran.user.first_name|first}}. {{basvuran.user.last_name|first}}.</a>
-										{% else %}
-										<a>{{basvuran.user.first_name|first}}. {{basvuran.user.last_name|first}}.</a>
-										{% endif %}
-										
-										<h5>{{basvuran.alan}}</h5>
-										<p>{{basvuran.secim_aciklama}}</p>
+							
+								<div class="row">
+									<div class="col-xs-2 additional_info_sub_grid_left" >
+										<img src="{{basvuran.kullanici_bilgi.kullanici_profil.url}}" style="width:150px;height:100px;object-fit: cover" alt="profil_fotoğrafı"  class="img-responsive" />
 									</div>
+									<div class="col-xs-7 additional_info_sub_grid_right">
+										<div class="additional_info_sub_grid_rightl">
+											{% if user_bilgi.username == is.user.username   %}
+											<a href="{% url 'profil' basvuran.user.username %}">{{basvuran.user.first_name|first}}. {{basvuran.user.last_name|first}}.</a>
+											{% else %}
+											<a>{{basvuran.user.first_name|first}}. {{basvuran.user.last_name|first}}.</a>
+											{% endif %}
+											
+											<h5>{{basvuran.alan}}</h5>
+											<p>{{basvuran.secim_aciklama|truncatechars:150}}</p>
+										</div>
+										{% if user_bilgi.username == is.user.username   %}
+
+											<div class="clearfix"> </div>
+											<a class="btn btn-warning" href="{% url 'profil' basvuran.user.username %}">Profile Git</a>		
+										
+										{% else %}			
+										{% endif %}
+
+									</div>
+										
+									{% if  user_bilgi.username == is.user.username  %}
+										{% if is_onay.secildi_mi %}
+										
+										{% else %}
+										{% if secilmis_freelancer.user == basvuran.user %}
+											<div>{{secilmis_freelancer.user.first_name}} {{secilmis_freelancer.user.last_name}} başka bir işte
+												  çalışıyor</div>
+										{% else %}
+										{% endif %}
+										<div class="col-xs-3">
+											<a class="btn btn-success" href="{% url 'onayla' is.id basvuran.user.id %}">Onayla</a>
+											<a class="btn btn-danger" href="{% url 'profil' basvuran.user.username %}">Reddet</a>
+		
+										</div>
+										{% endif %}
 									
-									<div class="clearfix"> </div>
+									{% else %}
+									{% endif %}
+									
 								</div>
+								
 								<div class="clearfix"> </div>
 							</div>
 							{% endfor %}

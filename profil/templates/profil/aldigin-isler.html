@@ -1,0 +1,61 @@
+{% extends "profil/base.html" %}
+{% load static %}
+{% block title %}Aldığın İşler{% endblock title %}
+{% block content %}
+<div class="layout-content">
+
+    <!-- Content -->
+    <div class="container flex-grow-1 container-p-y">
+      
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'profil' kullanici.username %}">{{ kullanici.first_name}} {{ kullanici.last_name}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'basvurulan_isler' kullanici.username %}">Başvurduğun İşler</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Aldığın İşler</li>
+            </ol>
+          </nav>
+          
+          
+     
+          {% if error %}
+          {{error}}
+          {% else %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">İş</th>
+                <th scope="col">İş Fiyat</th>
+                <th scope="col">Kategori</th>
+                <th scope="col">Alt Kategori</th>
+                <th scope="col">Alan</th>
+                <th scope="col">Açıklaman</th>
+                <th scope="col">İşi Teslim Et</th>
+                <th scope="col">Sil</th>
+              </tr>
+            </thead>
+            <tbody>
+             
+            {% for sf in secilen_free %}
+              <tr>
+                <td>{{sf.is_bilgi.is_isim}}</td>
+                <td>{{sf.is_bilgi.fiyat}}</td>
+                <td>{{sf.is_bilgi.kategori.kategoriAd}}</td>
+                <td>{{sf.is_bilgi.alt_kategori.altKategoriAd}}</td>
+                <td>{{sf.basvuru.alan|title}}</td>
+                <td>{{sf.basvuru.secim_aciklama|truncatechars:20}}</td>
+                
+            
+
+                <td><a class="btn btn-success text-white" href="{% url 'basvuru_sil' sf.is_bilgi.id sf.user.username %}">Teslim Et</a></td>
+                <td><a class="btn btn-danger text-white" href="{% url 'basvuru_sil' sf.is_bilgi.id sf.user.username %}">Sil</a></td>
+              </tr>
+              {% endfor %}
+            {% endif %}
+             
+              
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock %}

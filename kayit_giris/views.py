@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
+
 # Create your views here.
 
 def kayit_ol(request):
@@ -50,7 +51,6 @@ def kayit_ol(request):
     else:
         return render(request,"kayit_giris/kayitol.html")
     
-
 def giris_yap(request):
     if request.user.is_authenticated:
         return redirect('anasayfa')

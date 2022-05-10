@@ -1,8 +1,12 @@
+from distutils.log import error
 from django.shortcuts import redirect, render
 from kategori.models import Kategori,AltKategori
-from isler.models import İsBilgileri,İsGereksinimleri,Basvuru_Kayitlari
+from isler.models import İsBilgileri,İsGereksinimleri,Basvuru_Kayitlari,Secilen_Freelancer
 from profil.models import Universite,Sehir,Kullanici
 from django.contrib.auth.models import User
+
+from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 def filtering(param):
     return param != '' and param is not None
@@ -10,9 +14,12 @@ def filtering(param):
 def isler_view(request,slug):
 
     kategori = Kategori.objects.get(slug=slug)
-    is_filter = İsBilgileri.objects.filter(kategori=kategori.id)
+    is_filter = İsBilgileri.objects.filter(kategori=kategori.id).order_by('id').reverse()
     alt_kategori = AltKategori.objects.filter(kategori=kategori.id)
-
+    try:
+        kullanici = Kullanici.objects.get(user = request.user.id)
+    except Kullanici.DoesNotExist:
+        kullanici=None
     if is_filter.exists():
         
         altkategori = request.GET.get('alt-kategori')
@@ -34,6 +41,7 @@ def isler_view(request,slug):
                 'is':is_filter,
                 'kategoriListe':kategori,
                 'altKategori':alt_kategori,
+                'kullanici':kullanici
             }
             return render(request,"isler/isler.html",context)
 
@@ -42,6 +50,7 @@ def isler_view(request,slug):
                 'error':'İş Yok',
                 'kategoriListe':kategori,
                 'altKategori':alt_kategori,
+                'kullanici':kullanici
             }
             return render(request,"isler/isler.html",context)
 
@@ -51,12 +60,14 @@ def isler_view(request,slug):
             'error':'İş Yok',
             'kategoriListe':kategori,
             'altKategori':alt_kategori,
+            'kullanici':kullanici
 
 
         }
         return render(request,"isler/isler.html",context)
 
 def is_olustur(request,username): # İş Fotoğrafları, iş gereksinimleri iyileştirelecek
+    # eğer aynı isimli iş varsa hata mesajı gönder
     user = User.objects.get(username=username)
     kategori = Kategori.objects.all()
     alt_kategori = AltKategori.objects.filter(is_active=True)
@@ -73,7 +84,6 @@ def is_olustur(request,username): # İş Fotoğrafları, iş gereksinimleri iyil
         kategori_ad = request.POST['kategori']
         alt_kategori = request.POST['alt_kategori']
         is_gereksinimleri = request.POST['is_gereksinimleri']
-        print(is_gereksinimleri)
         isbilgi_kayit = İsBilgileri.objects.create(is_isim = is_isim, fiyat =fiyat,is_aciklama=aciklama,resim1 = foto1, resim2=foto2,resim3=foto3,is_baslangic = baslangic,is_bitis=bitis,kategori_id = kategori_ad,alt_kategori_id=alt_kategori,user=user)
         isbilgi_kayit.save()
         is_db = İsBilgileri.objects.get(is_isim = is_isim)
@@ -88,31 +98,62 @@ def is_olustur(request,username): # İş Fotoğrafları, iş gereksinimleri iyil
         }
     return render(request,'isler/is-olustur.html',context)
 
-
 def icerik_view(request,slug):
 
     is_bilgileri = İsBilgileri.objects.get(slug=slug)
     basvuranlar = Basvuru_Kayitlari.objects.filter(is_bilgi = is_bilgileri.id)
-    if basvuranlar.exists():
+    tum_basvurular = Basvuru_Kayitlari.objects.all()
+    for i in tum_basvurular:
+        secilmis_freelancer = Secilen_Freelancer.objects.filter(user = i.user.id).first()
+        
+    try:
+        is_onaylandi_mi = Secilen_Freelancer.objects.get(is_bilgi=is_bilgileri.id)
+    except ObjectDoesNotExist:
+        is_onaylandi_mi= None
+    if request.user.is_authenticated:
+        basvuran = Basvuru_Kayitlari.objects.filter(Q(is_bilgi = is_bilgileri.id) , Q(user = request.user.id)).exists()
 
+        basvuru = Secilen_Freelancer.objects.filter(user = request.user.id).filter(is_bitti_mi = False).exists()
+       
+        try:
+            kullanici = Kullanici.objects.get(user = request.user)
+        except ObjectDoesNotExist:
+            kullanici= None
+    else:
+        kullanici= None
+        basvuru = None
+        basvuran = None
+        
+    if basvuranlar.exists():
+        
         context={
             'is':is_bilgileri,
             'user_bilgi':request.user,
-            'basvuranlar':basvuranlar
+            'basvuranlar':basvuranlar,
+            'is_onay':is_onaylandi_mi,
+            'kullanici':kullanici,
+            'basvuru_error':basvuru,
+            'basvuran':basvuran,
+            'secilmis_freelancer':secilmis_freelancer
         }
+       
     else:
         context={
             'is':is_bilgileri,
             'user_bilgi':request.user,
-            'error':'Başvuran Kullanıcı Bulunmamaktadır.'
+            'error':'Başvuran Kullanıcı Bulunmamaktadır.',
+            'kullanici':kullanici,
+            'basvuru_error':basvuru,
+            'basvuran':basvuran,
+            'secilmis_freelancer':secilmis_freelancer
+
         }
     return render(request,'isler/isicerik.html',context)
 
 def basvur_view(request,slug):
     is_bilgi= İsBilgileri.objects.get(slug=slug)
     user_info = Kullanici.objects.get(user=request.user.id)
-    universiteler=Universite.objects.all()
-    sehirler = Sehir.objects.all()
+    
     if request.method == 'POST':
        
         alan=request.POST['alan']
@@ -123,9 +164,16 @@ def basvur_view(request,slug):
         return redirect('icerik',slug)
     context ={
         'is':is_bilgi,
-        'universiteler':universiteler,
-        'sehirler':sehirler,
+    
         'user_info':user_info,
     }
     return render(request,'isler/basvur.html',context)
+
+def freelancer_onay(request,is_id,user_id):
+    basvurulan_is= Basvuru_Kayitlari.objects.get(Q(is_bilgi = is_id),Q(user=user_id))
+    
+    freelancer_secim = Secilen_Freelancer.objects.create(user = basvurulan_is.user,is_bilgi = basvurulan_is.is_bilgi,secildi_mi =1,is_bitti_mi=0,basvuru_id=basvurulan_is.id)
+    freelancer_secim.save()
+
+    return redirect('icerik',basvurulan_is.is_bilgi.slug)
 

@@ -1,0 +1,54 @@
+{% extends "profil/base.html" %}
+{% load static %}
+{% block title %}Biten İşler{% endblock title %}
+{% block content %}
+<div class="layout-content">
+
+    <!-- Content -->
+    <div class="container flex-grow-1 container-p-y">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'profil' kullanici.username %}">{{ kullanici.first_name}} {{ kullanici.last_name}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Biten İşler</li>
+            </ol>
+          </nav>
+          {% if error %}
+          {{error}}
+          {% else %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Başvurulan İş</th>
+                <th scope="col">İş Fiyat</th>
+                <th scope="col">Kategori</th>
+                <th scope="col">Alt Kategori</th>
+                <th scope="col">Alan</th>
+                <th scope="col">Açıklaman</th>
+                <th scope="col">Tamamlandı</th>
+              </tr>
+            </thead>
+            <tbody>
+        
+            {% for basvurulan_is in basvurulan_isler %}
+              <tr>
+                <td>{{basvurulan_is.is_bilgi.is_isim}}</td>
+                <td>{{basvurulan_is.is_bilgi.fiyat}}</td>
+                <td>{{basvurulan_is.is_bilgi.kategori.kategoriAd}}</td>
+                <td>{{basvurulan_is.is_bilgi.alt_kategori.altKategoriAd}}</td>
+                <td>{{basvurulan_is.alan|title}}</td>
+                <td>{{basvurulan_is.secim_aciklama|truncatechars:20}}</td>
+                <td><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                    width="48" height="48"
+                    viewBox="0 0 48 48"
+                    style=" fill:#000000;"><path fill="#43A047" d="M40.6 12.1L17 35.7 7.4 26.1 4.6 29 17 41.3 43.4 14.9z"></path></svg></td>
+              </tr>
+            {% endfor %}
+            {% endif %}
+             
+              
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock %}

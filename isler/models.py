@@ -47,7 +47,14 @@ class Basvuru_Kayitlari(models.Model):
     kullanici_bilgi = models.ForeignKey(Kullanici,on_delete=models.CASCADE)
     alan= models.CharField(max_length=100)
     secim_aciklama = models.TextField()
-    
+ 
 
     def __str__(self):
         return f'{self.user.username}'
+
+class Secilen_Freelancer(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    is_bilgi = models.ForeignKey(İsBilgileri,on_delete=models.CASCADE)
+    basvuru = models.ForeignKey(Basvuru_Kayitlari,on_delete=models.CASCADE,null=True)
+    secildi_mi= models.BooleanField(default=0)
+    is_bitti_mi=models.BooleanField(default=0)
