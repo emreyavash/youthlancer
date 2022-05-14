@@ -26,4 +26,5 @@ urlpatterns = [
     path('',include('kategori.urls')),
     path('',include('profil.urls')),
     path('',include('kayit_giris.urls')),
+    path('',include('mesajlasma.urls')),
 ] + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

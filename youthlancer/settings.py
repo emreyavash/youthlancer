@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +46,7 @@ INSTALLED_APPS = [
     'kategori',
     'profil',
     'kayit_giris',
+    'mesajlasma',
 ]
 
 MIDDLEWARE = [
@@ -80,6 +83,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'youthlancer.wsgi.application'
+ASGI_APPLICATION = 'youthlancer.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default':{
+        'BACKEND' : 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 
 # Database

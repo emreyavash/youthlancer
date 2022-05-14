@@ -53,8 +53,9 @@ class Basvuru_Kayitlari(models.Model):
         return f'{self.user.username}'
 
 class Secilen_Freelancer(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='freelancer')
     is_bilgi = models.ForeignKey(İsBilgileri,on_delete=models.CASCADE)
     basvuru = models.ForeignKey(Basvuru_Kayitlari,on_delete=models.CASCADE,null=True)
+    is_veren = models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name='is_veren')
     secildi_mi= models.BooleanField(default=0)
     is_bitti_mi=models.BooleanField(default=0)

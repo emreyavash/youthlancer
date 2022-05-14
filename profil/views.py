@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from .models import Kullanici,Sehir,Universite,Yetenekler,Yetenek_Kullanici,Portfoy_Kullanici,Fotograf_Kullanici
 from isler.models import Secilen_Freelancer,İsBilgileri,Kategori,İsGereksinimleri,AltKategori
 from django.contrib.auth.models import User
-from isler.models import Basvuru_Kayitlari
+from isler.models import Basvuru_Kayitlari,Secilen_Freelancer
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -16,6 +16,7 @@ def profil_view(request,username):
     user = User.objects.get(username = username)
     kullanici = Kullanici.objects.filter(user = user)
     giris_yapan_kullanici = Kullanici.objects.get(user = request.user.id)
+    isveren_profil = Secilen_Freelancer.objects.filter(Q(user = request.user.id),Q(is_veren = user.id))
     if giris_yapan_kullanici.freelancer:
         if  user.username == request.user.username:
             if kullanici.exists():
@@ -46,6 +47,32 @@ def profil_view(request,username):
                 return render(request,'profil/profil.html',context)
             else:
                 return hesapAyarlari_view(request,username)
+        elif isveren_profil.exists():
+                kullanici = Kullanici.objects.get(user = user)
+                kullanici_yetenek = Yetenek_Kullanici.objects.filter(user = user)
+                portfolyo =Portfoy_Kullanici.objects.filter(user = user)
+                fotograflar = Fotograf_Kullanici.objects.filter(user = user)
+    
+
+                if kullanici_yetenek.exists() or portfolyo.exists() or fotograflar.exists():
+                    context={
+                    'user_mi':user,
+                    'kullanici_yetenek':kullanici_yetenek,
+                    'kullanici':kullanici,
+                    'portfolyo':portfolyo,
+                    'fotograflar':fotograflar,
+                    'fotograf_sayi':fotograflar.count(),
+                
+                    }
+                    return render(request,'profil/profil.html',context)
+                context={
+                    'yetenek_yazi':"Yetenek Eklenmemiş",
+                    'portfolyo_yazi':'Portfolyo Eklenmemiş',
+                    'fotograf_yazi':'Fotograf Eklenmemiş',
+                    'kullanici':kullanici,
+            
+                }
+                return render(request,'profil/profil.html',context)
         else:
             return redirect('anasayfa')
     else:

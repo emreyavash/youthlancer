@@ -64,7 +64,7 @@
 						</div>
 						<div class="col-xs-10 additional_info_sub_grid_right">
 							<div class="additional_info_sub_grid_rightl">
-							<a href="single.html">{{is.user.first_name|first}}. {{is.user.last_name|first}}.</a>
+							<a href="{% url 'profil' is.user.username %}">{{is.user.first_name|first}}. {{is.user.last_name|first}}.</a>
 								<h5>İş Veren </h5>
 								
 							</div>

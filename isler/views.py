@@ -172,7 +172,7 @@ def basvur_view(request,slug):
 def freelancer_onay(request,is_id,user_id):
     basvurulan_is= Basvuru_Kayitlari.objects.get(Q(is_bilgi = is_id),Q(user=user_id))
     
-    freelancer_secim = Secilen_Freelancer.objects.create(user = basvurulan_is.user,is_bilgi = basvurulan_is.is_bilgi,secildi_mi =1,is_bitti_mi=0,basvuru_id=basvurulan_is.id)
+    freelancer_secim = Secilen_Freelancer.objects.create(user = basvurulan_is.user,is_bilgi = basvurulan_is.is_bilgi,secildi_mi =1,is_bitti_mi=0,basvuru_id=basvurulan_is.id,is_veren = basvurulan_is.is_bilgi.user)
     freelancer_secim.save()
 
     return redirect('icerik',basvurulan_is.is_bilgi.slug)

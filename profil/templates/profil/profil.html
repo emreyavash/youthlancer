@@ -11,6 +11,7 @@
               <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
               <li class="breadcrumb-item"><a href="{% url 'profil' kullanici.user.username %}">{{ kullanici.user.first_name}} {{ kullanici.user.last_name}}</a></li>
               <li class="breadcrumb-item active" aria-current="page">Profil</li>
+              <li class="breadcrumb-item"><a href="{% url 'mesajlar' kullanici.user.username %}">Mesaj At</a></li>
             </ol>
           </nav>
       <!-- Header -->
