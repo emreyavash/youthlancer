@@ -8,8 +8,8 @@
     <nav aria-label="breadcrumb" class="main-breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'profil'  kullanici.user.username %}">{{  kullanici.user.first_name}} {{  kullanici.user.last_name}}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Hesap Ayarları</li>
+        <li class="breadcrumb-item"><a href="{% url 'profil'  user.username %}">{{  user.first_name}} {{  user.last_name}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Hesap Ayarları {{ogrenci_belgesi}}</li>
       </ol>
     </nav>
     <!-- /Breadcrumb -->
@@ -122,7 +122,28 @@
                           {% endfor %}
                         </select>
                       </div>
+                      {% if belge_onay.is_correct %}
+                      <div class="form-group">
+                        <label for="url">Öğrenci Belgesi (Kartı)</label>
+                        <p>Öğrenci olduğunuz onaylandı.</p>
+
+                        
+                      </div>
                
+                      {% else %}
+                      <div class="form-group">
+                        <label for="url">Öğrenci Belgesi (Kartı)</label>
+                        {% if belge_onay is not None %}
+                        <p>Öğrence belgeniz veya kartınız onaylanmayı bekliyor.</p>
+                        {% else %}
+                          <input type="file" class="form-control pb-2" name="ogrenci_belge" id="ogrenci_belge">
+
+                        {% endif %}
+                        
+                      </div>
+               
+                      {% endif %}
+                    
                 <div class="form-group small text-muted">
                   All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears.
                 </div>

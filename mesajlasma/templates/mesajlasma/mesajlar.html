@@ -18,18 +18,19 @@
 							</div>
 						</div>
 					</div>
-					
+					{% if error %}
+						<p>{{error}}</p>
+					{% else %}
 					{% for mesaj in mesaj_atanlar %}
 
                     {% if mesaj.receiver_user.id == user.id %}
-						<a href="#" class="list-group-item list-group-item-action border-0">
+						<a href="{% url 'mesajlasma' mesaj.sender_user.user.username %}" class="list-group-item list-group-item-action border-0">
 							<div class="d-flex align-items-start">
 								<img src="{{mesaj.sender_user.kullanici_profil.url}}" class="rounded-circle mr-1" alt="{{mesaj.sender_user.user.username}}" width="40" height="40">
 								<div class="flex-grow-1 ml-3">
                                    
                                     
                                         {{mesaj.sender_user.user.first_name|title}} {{mesaj.sender_user.user.last_name|title}}
-
                                     
 									
 								</div>
@@ -37,7 +38,7 @@
 						</a>
                     {% elif mesaj.sender_user.id == user.id %}
                     
-                    <a href="/" class="list-group-item list-group-item-action border-0">
+                    <a href="{% url 'mesajlasma' mesaj.receiver_user.user.username %}" class="list-group-item list-group-item-action border-0">
                         <div class="d-flex align-items-start">
                             <img src="{{mesaj.receiver_user.kullanici_profil.url}}" class="rounded-circle mr-1" alt="{{mesaj.receiver_user.user.username}}" width="40" height="40">
                             <div class="flex-grow-1 ml-3">
@@ -52,10 +53,11 @@
                     {% endif %}
 					
 					{% endfor %}
+					{% endif %}
+				
 					
 				
 					
-					<hr class="d-block d-lg-none mt-1 mb-0">
 				</div>
 	
 			</div>

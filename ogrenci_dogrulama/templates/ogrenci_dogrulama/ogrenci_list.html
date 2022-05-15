@@ -1,0 +1,51 @@
+{% extends 'ogrenci_dogrulama/base.html' %}
+{% load static %}
+{% block title %}Öğrenci Doğrulama{% endblock title %}
+{% block content %}
+
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+   
+  </nav>
+  <div class="form-control">
+    <h6>Öğrenci Doğrulama</h6>
+    <hr>
+    <div class="text-danger">
+   
+    </div>
+
+   
+    <div class="mt-5">
+      <h3>Gönderilen Belgeler</h3>
+    </div>
+    <table class="table">
+   
+        <thead>
+          <tr>
+            <th scope="col">Öğrenci Belgesi</th>
+            <th scope="col">Öğrenci Adı</th>        
+            <th scope="col">Öğrenci Soyadı</th>        
+            <th scope="col">Tarihi</th>        
+            <th scope="col">Onaylandı mı?</th>
+                    
+            <th scope="col">Onayla</th>
+            <th scope="col">Sİl</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for ogrenci in gonderen_ogrenciler  %}
+            <tr>
+                <td><a href="{{ogrenci.ogrenci_belge.url}}" target="_blank">tıkla</a></td>
+                <td>{{ogrenci.kullanici.first_name}}</td>
+                <td>{{ogrenci.kullanici.last_name}}</td>
+                <td>{{ogrenci.date}}</td>
+                <td>{{ogrenci.is_correct}}</td>
+                <td><a href="{% url 'onayla' ogrenci.kullanici.username %}" class="btn btn-success text-light">Onayla</a></td>
+                <td><a href="{% url 'sil' ogrenci.kullanici.username %}" class="btn btn-danger text-light">Sil</a></td>
+            </tr>
+            {% endfor %}
+         
+        </tbody>
+      </table>
+  </div>
+
+{% endblock content %}

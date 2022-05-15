@@ -64,10 +64,18 @@
 						</div>
 						<div class="col-xs-10 additional_info_sub_grid_right">
 							<div class="additional_info_sub_grid_rightl">
+							{% if secilmis_freelancer.user.id == request.user.id %}
 							<a href="{% url 'profil' is.user.username %}">{{is.user.first_name|first}}. {{is.user.last_name|first}}.</a>
 								<h5>İş Veren </h5>
 								
 							</div>
+							{% else %}
+							<a href="#">{{is.user.first_name|first}}. {{is.user.last_name|first}}.</a>
+								<h5>İş Veren </h5>
+								
+							</div>
+							{% endif %}
+							
 							<p><i class="item_price" style="font-size:25px">{{is.fiyat}} ₺</i></p>
 							
 							<div class="clearfix"> </div>

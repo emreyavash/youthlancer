@@ -1,0 +1,47 @@
+{% extends "profil/base.html" %}
+{% load static %}
+{% block title %}Kabul Edilen Freelancerlar{% endblock title %}
+{% block content %}
+<div class="layout-content">
+
+    <!-- Content -->
+    <div class="container flex-grow-1 container-p-y">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'paylasilan_isler' user.username %}">Paylaştığın İşler</a></li>
+            </ol>
+          </nav>
+
+          <table class="table">
+            <thead>
+              <tr>
+                
+                <th scope="col">İş</th>
+                <th scope="col">İş Fiyat</th>
+                <th scope="col">Kategori</th>
+                <th scope="col">Alt Kategori</th>
+                <th scope="col">Freelancer</th>
+                <th scope="col">Mesaj At</th>
+                <th scope="col">İptal</th>
+              </tr>
+            </thead>
+            <tbody>
+        
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+       
+             
+              
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock %}

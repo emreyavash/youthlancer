@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon">
+    <title>Youthlancer | {% block title %}{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	{% include 'profil/partials/style.html' %}
+
+</head>
+<body>
+<div class="header">
+	<div class="container">
+        {% include 'partials/logo.html' %}
+		<div class="clearfix"> </div>
+	</div>
+</div>
+
+{% block content %}
+{% endblock %}
+</body>
+</html>

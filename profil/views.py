@@ -1,13 +1,16 @@
-from multiprocessing import context
+
 from django.shortcuts import redirect, render
 
 from .models import Kullanici,Sehir,Universite,Yetenekler,Yetenek_Kullanici,Portfoy_Kullanici,Fotograf_Kullanici
 from isler.models import Secilen_Freelancer,İsBilgileri,Kategori,İsGereksinimleri,AltKategori
 from django.contrib.auth.models import User
 from isler.models import Basvuru_Kayitlari,Secilen_Freelancer
+from ogrenci_dogrulama.models import OgrenciDogrulama
+from ogrenci_dogrulama.views import ogrenci_dogrulama,dogrulama
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 @login_required(login_url='giris_yap')
@@ -15,8 +18,11 @@ def profil_view(request,username):
     
     user = User.objects.get(username = username)
     kullanici = Kullanici.objects.filter(user = user)
-    giris_yapan_kullanici = Kullanici.objects.get(user = request.user.id)
     isveren_profil = Secilen_Freelancer.objects.filter(Q(user = request.user.id),Q(is_veren = user.id))
+    try:
+        giris_yapan_kullanici = Kullanici.objects.get(user = request.user.id)
+    except ObjectDoesNotExist:
+        return hesapAyarlari_view(request,username)
     if giris_yapan_kullanici.freelancer:
         if  user.username == request.user.username:
             if kullanici.exists():
@@ -104,7 +110,6 @@ def profil_view(request,username):
             return render(request,'profil/profil.html',context)
         else:
             return hesapAyarlari_view(request,username)
-
 @login_required(login_url='giris_yap')
 def hesapAyarlari_view(request,username):
     if request.user.username == username:
@@ -113,7 +118,7 @@ def hesapAyarlari_view(request,username):
         sehir = Sehir.objects.all()
         user = User.objects.get(username=username)
         kullanici = Kullanici.objects.filter(user=user)
-
+        ogrenci_belgesi = OgrenciDogrulama.objects.filter(kullanici = user.id)
         if request.method == "POST":
             
             if kullanici.exists():
@@ -126,12 +131,17 @@ def hesapAyarlari_view(request,username):
                 kullanici_bilgileri.sehir =Sehir.objects.get(id=sehir_id)
                 kullanici_bilgileri.universite = Universite.objects.get(id = universite_id)
                 kullanici_bilgileri.save()
+                if  ogrenci_belgesi.exists() == False:
+                    
+                    ogrenci_belge = request.FILES.get("ogrenci_belge")
+                    dogrulama(ogrenci_belge,user.username)
                 context={
                     'sehirler':sehir,
                     'universite':universite,
-                    'kullanici':kullanici_bilgileri
+                    'kullanici':kullanici_bilgileri,
+                    'user':user,
                 }
-                return render(request,'profil/hesapayarlari.html',context)
+                return redirect('hesap-ayarlari',user.username)
             else:
                 profil_foto = request.FILES.get("profil-foto",False)
                 aciklama = request.POST["aciklama"]
@@ -140,7 +150,11 @@ def hesapAyarlari_view(request,username):
                 dogum_gunu = request.POST["dogum_gunu"]
                 sehir_id =Sehir.objects.get(id=sehir)
                 universite_id = Universite.objects.get(id = universite)
-
+                if  ogrenci_belgesi.exists() == False:
+                
+                    ogrenci_belge = request.FILES.get("ogrenci_belge")
+                    dogrulama(ogrenci_belge,user.username)
+                
                 kullanici = Kullanici.objects.create(kullanici_profil = profil_foto,aciklama=aciklama,sehir=sehir_id,universite=universite_id,user=user,dogum_gunu =dogum_gunu)
                 kullanici.save()
             
@@ -148,18 +162,25 @@ def hesapAyarlari_view(request,username):
         else:
             if kullanici.exists():
                 kullanici_bilgileri = Kullanici.objects.get(user=user)
-
+                try:
+                    belge_onay = OgrenciDogrulama.objects.get(kullanici = user)
+                except ObjectDoesNotExist:
+                    belge_onay = None
                 context={
                     'sehirler':sehir,
                     'universite':universite,
-                    'kullanici':kullanici_bilgileri
+                    'kullanici':kullanici_bilgileri,
+                    'user':user,
+                    'belge_onay':belge_onay
+
                 }
                 return render(request,'profil/hesapayarlari.html',context)
             else:
                 context={
                     'sehirler':sehir,
                     'universite':universite,
-                    
+                    'user':user,
+                    'belge_onay':belge_onay,
                     'error':'Profil Bilgilerini Doğrulamadan Profiliniz Gözükmez.'
                 }
                 return render(request,'profil/hesapayarlari.html',context)
@@ -383,6 +404,7 @@ def is_duzenle(request,username,id):
         }
     return render(request,'profil/is_duzenle.html',context)
 
+@login_required(login_url='giris_yap')
 def biten_isler(request,username):
     if request.user.username == username:
         kullanici = User.objects.get(username = username)
@@ -403,7 +425,7 @@ def biten_isler(request,username):
     else:
         return redirect('anasayfa') 
 
-
+@login_required(login_url='giris_yap')
 def aldigin_isler(request,username):
     if request.user.username == username:
         kullanici = User.objects.get(username = username)
@@ -424,5 +446,19 @@ def aldigin_isler(request,username):
             'error':'Alınan iş yok.'
             }
         return render(request,'profil/aldigin-isler.html',context)
+    else:
+        return redirect('anasayfa')
+
+@login_required(login_url='giris_yap')
+def kabul_edilen_freelancerlar(request,username):
+    if request.user.username == username:
+
+        user = User.objects.get(username = username)
+        freelancerlar = Secilen_Freelancer.objects.filter(is_veren = user)
+        context = {
+            'user':user,
+            'freelancerlar':freelancerlar
+        }
+        return render(request,'profil/kabul_edilen_freelancerlar.html',context)
     else:
         return redirect('anasayfa')

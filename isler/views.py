@@ -145,7 +145,6 @@ def icerik_view(request,slug):
             'kullanici':kullanici,
             'basvuru_error':basvuru,
             'basvuran':basvuran,
-            'secilmis_freelancer':secilmis_freelancer
 
         }
     return render(request,'isler/isicerik.html',context)

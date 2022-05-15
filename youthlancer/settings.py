@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'profil',
     'kayit_giris',
     'mesajlasma',
+    'ogrenci_dogrulama'
 ]
 
 MIDDLEWARE = [

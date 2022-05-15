@@ -17,4 +17,5 @@ urlpatterns = [
     path('paylasilan-is-duzenle/<str:username>/<int:id>',views.is_duzenle,name='is_duzenle'),
     path('paylasilan_sil/<int:id>/<str:username>',views.paylasilan_sil,name='paylasilan_sil'),
     path('biten-isler/<str:username>',views.biten_isler,name='biten_isler'),
+    path('kabul_edilen_freelancerlar/<str:username>',views.kabul_edilen_freelancerlar,name='kabul_edilen_freelancerlar'),
 ]

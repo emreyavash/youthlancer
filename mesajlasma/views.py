@@ -15,13 +15,16 @@ def mesajlar(request,username):
     user1 = User.objects.get(username = request.user.username)
     user = Kullanici.objects.get(user = user1.id)
     mesaj_atanlar = MesajKanali.objects.filter(Q(receiver_user = user.id) |Q(sender_user = user.id))
-
+    if mesaj_atanlar.exists():
     
-    
-    context = {
-        'mesaj_atanlar':mesaj_atanlar,
-        'user':user
-    }
+        context = {
+            'mesaj_atanlar':mesaj_atanlar,
+            'user':user,
+        }
+    else:
+        context={
+            'error':'Mesaj yok'
+        }
     return render(request,'mesajlasma/mesajlar.html',context)
 
 @login_required(login_url='giris_yap')
