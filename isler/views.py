@@ -14,7 +14,7 @@ def filtering(param):
 def isler_view(request,slug):
 
     kategori = Kategori.objects.get(slug=slug)
-    is_filter = İsBilgileri.objects.filter(kategori=kategori.id).order_by('id').reverse()
+    is_filter = İsBilgileri.objects.filter(Q(kategori=kategori.id),Q(is_active = True)).order_by('id').reverse()
     alt_kategori = AltKategori.objects.filter(kategori=kategori.id)
     try:
         kullanici = Kullanici.objects.get(user = request.user.id)
@@ -158,7 +158,7 @@ def basvur_view(request,slug):
         alan=request.POST['alan']
         secim_aciklama=request.POST['secim_aciklama']
    
-        basvuru_kayit = Basvuru_Kayitlari.objects.create(user_id = request.user.id,alan=alan,secim_aciklama=secim_aciklama,is_bilgi_id=is_bilgi.id,kullanici_bilgi_id = user_info.id)
+        basvuru_kayit = Basvuru_Kayitlari.objects.create(user_id = request.user.id,alan=alan,secim_aciklama=secim_aciklama,is_bilgi_id=is_bilgi.id,kullanici_bilgi_id = user_info.id,is_veren = is_bilgi.user)
         basvuru_kayit.save()
         return redirect('icerik',slug)
     context ={
@@ -168,11 +168,5 @@ def basvur_view(request,slug):
     }
     return render(request,'isler/basvur.html',context)
 
-def freelancer_onay(request,is_id,user_id):
-    basvurulan_is= Basvuru_Kayitlari.objects.get(Q(is_bilgi = is_id),Q(user=user_id))
-    
-    freelancer_secim = Secilen_Freelancer.objects.create(user = basvurulan_is.user,is_bilgi = basvurulan_is.is_bilgi,secildi_mi =1,is_bitti_mi=0,basvuru_id=basvurulan_is.id,is_veren = basvurulan_is.is_bilgi.user)
-    freelancer_secim.save()
 
-    return redirect('icerik',basvurulan_is.is_bilgi.slug)
 

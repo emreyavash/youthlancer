@@ -1,5 +1,3 @@
-from distutils.command.upload import upload
-from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
@@ -26,10 +24,13 @@ class Kullanici(models.Model):
     universite = models.ForeignKey(Universite,on_delete=models.SET_NULL,null=True)
     aciklama = models.TextField()
     slug = models.SlugField(null=False,blank=True,unique=True,db_index=True,editable=False)
+    kayit_tarihi = models.DateTimeField(auto_now_add=True,null=True)
+    gender = models.BooleanField(null=True)
+    hesap_kayit = models.BooleanField(default=False)
     def __str__(self) :
         return f"{self.user.first_name} {self.user.last_name}"
     def save(self,*args, **kwargs):
-        self.slug = slugify(self.user.first_name,self.user.last_name)
+        self.slug = slugify(self.user.username)
         super().save(*args, **kwargs)
 
 class Yetenekler(models.Model):
@@ -48,3 +49,10 @@ class Portfoy_Kullanici(models.Model):
 class Fotograf_Kullanici(models.Model):
     user=models.ForeignKey(User,on_delete=models.DO_NOTHING,null=False,blank=True)
     fotograf = models.ImageField(upload_to='fotograf',null=True)
+
+class UploadFile(models.Model):
+    freelancer = models.ForeignKey(User,related_name='freelancer_upload',on_delete=models.CASCADE)
+    isveren = models.ForeignKey(User,related_name='isveren_upload',on_delete=models.CASCADE)
+    is_bilgi = models.IntegerField()
+    file = models.FileField(upload_to='is_teslim')
+    yukleme_tarihi = models.DateTimeField(auto_now_add=True)

@@ -1,0 +1,7 @@
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="fiyat" value="{{yapilan_is.is_bilgi.fiyat}}">
+    <button type="submit">Öde</button>
+
+</form>

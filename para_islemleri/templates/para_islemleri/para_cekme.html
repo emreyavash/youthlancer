@@ -1,0 +1,13 @@
+{% if error %}
+{{error}}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <p>Çekilecek Tutar:</p>
+    <input type="number" name="tutar" value="">
+    <p>Iban:</p>
+    <input type="text" name="iban" value="">
+    <button type="submit">Öde</button>
+
+</form>

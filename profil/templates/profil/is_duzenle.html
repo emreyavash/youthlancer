@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group">
                     <label for="bio">Açıklama</label>
-                    <textarea class="form-control autosize" name="aciklama" id="bio" value="{{is_bilgileri.is_aciklama}}" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;"></textarea>
+                    <textarea class="form-control autosize" name="aciklama" id="bio"  style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;">{{is_bilgileri.is_aciklama}}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="url" style="display:block" >İş Fotoğrafları <p>(İlk Seçilen Fotoğraf Kapak Fotoğrafı olarak kullanılacaktır)</p></label>
@@ -30,23 +30,28 @@
                     {% comment %} <input type="file" accept="image/*" class="form-control pb-2" name="isfoto1" id="url" value="{{is_bilgileri.resim1}}"> {% endcomment %}
                     {% if is_bilgileri.resim1 %}
                     <img id="image1" style="display:inline-block" src="{{is_bilgileri.resim1.url}}" width="200" height="200" />
+                    <input type="hidden" name="hidden_resim1" value={{is_bilgileri.resim1}}>
                     {% else %}
                     {% endif %}
                     {% if is_bilgileri.resim2 %}
                     <img id="image2" style="display:inline-block" src="{{is_bilgileri.resim2.url}}" width="200" height="200" />
+                    <input type="hidden" name="hidden_resim2" value={{is_bilgileri.resim2}}>
+
                     {% else %}
                     {% endif %}
                     {% if is_bilgileri.resim3 %}
                     <img id="image3" style="display:inline-block" src="{{is_bilgileri.resim3.url}}" width="200" height="200" />
+                    <input type="hidden" name="hidden_resim3" value={{is_bilgileri.resim3}}>
+
                     {% else %}
                     {% endif %}
-                    <input id="files1" type="file" accept="image/*" class="form-control pb-2" name="isfoto1" id="url" value="{{is_bilgileri.resim1}}" />
+                    <input id="files1" type="file" accept="image/*" class="form-control pb-2" name="isfoto1" id="url" value="{{is_bilgileri.resim1.url}}" />
 
                     
                     
-                    <input type="file" id="files2" accept="image/*" class="form-control pb-2" name="isfoto2" id="url" value="{{is_bilgileri.resim2}}">
+                    <input type="file" id="files2" accept="image/*" class="form-control pb-2" name="isfoto2" id="url" value="{{is_bilgileri.resim2.url}}">
 
-                    <input type="file" id="files3" accept="image/*" class="form-control pb-2" name="isfoto3" id="url" value="{{is_bilgileri.resim3}}">
+                    <input type="file" id="files3" accept="image/*" class="form-control pb-2" name="isfoto3" id="url" value="{{is_bilgileri.resim3.url}}">
                     <script>
                         document.getElementById("files1").onchange = function () {
                             var reader = new FileReader();
@@ -125,8 +130,22 @@
                             {% endfor %}
                         </select>
                         </div>
-                
-           
+                    <div class="form-group">
+                        {% if is_bilgileri.is_active %}
+                        <label for="l_box1"><input type="radio" name="is_active" value="1" id="l_box1" checked>İş Listeleniyor.</label>
+                        <label for="d_box2"><input type="radio" name="is_active" value="0" id="d_box2">İş Listelenmiyor.</label>
+                        {% else %}
+                        <label for="l_box1"><input type="radio" name="is_active" value="1" id="l_box1">İş Listeleniyor.</label>
+                        <label for="d_box2"><input type="radio" name="is_active" value="0" id="d_box2" checked>İş Listelenmiyor.</label>
+                        {% endif %}
+                        
+                           
+                       
+                    </div>
+                    <div class="form-group">
+                        <p>{{is_bilgileri.yayin_tarihi}}</p>
+                        <p>{{is_bilgileri.guncelleme_tarihi}}</p>
+                    </div>
                 <button type="submit" class="btn btn-primary  mb-5">Kaydet</button>
                 </form>
                 </div>

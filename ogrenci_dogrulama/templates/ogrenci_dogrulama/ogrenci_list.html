@@ -39,7 +39,12 @@
                 <td>{{ogrenci.kullanici.last_name}}</td>
                 <td>{{ogrenci.date}}</td>
                 <td>{{ogrenci.is_correct}}</td>
-                <td><a href="{% url 'onayla' ogrenci.kullanici.username %}" class="btn btn-success text-light">Onayla</a></td>
+                {% if ogrenci.is_correct %}
+                  <td>Onaylandı</td>
+                {% else %}
+                  <td><a href="{% url 'onayla' ogrenci.kullanici.username %}" class="btn btn-success text-light">Onayla</a></td>
+
+                {% endif %}
                 <td><a href="{% url 'sil' ogrenci.kullanici.username %}" class="btn btn-danger text-light">Sil</a></td>
             </tr>
             {% endfor %}

@@ -112,6 +112,11 @@
 						<p><a class="item_add" >Başvur</a></p>
 						<h6>Daha önce bu işe başvurdunuz.</h6>
 					</div>
+					{% elif is_onay %}
+					<div class="simpleCart_shelfItem">
+						<p><a class="item_add" >Başvur</a></p>
+						<h6>Bu iş için biri seçildi</h6>
+					</div>
 					{% elif user.is_authenticated %}
 					<div class="simpleCart_shelfItem">
 						<p><a class="item_add" href="{% url 'basvur' is.slug %}">Başvur</a></p>
@@ -190,14 +195,14 @@
 										{% if is_onay.secildi_mi %}
 										
 										{% else %}
-										{% if secilmis_freelancer.user == basvuran.user %}
-											<div>{{secilmis_freelancer.user.first_name}} {{secilmis_freelancer.user.last_name}} başka bir işte
-												  çalışıyor</div>
-										{% else %}
-										{% endif %}
+											{% if secilmis_freelancer.user == basvuran.user %}
+												<div>{{secilmis_freelancer.user.first_name}} {{secilmis_freelancer.user.last_name}} başka bir işte
+													çalışıyor</div>
+											{% else %}
+											{% endif %}
 										<div class="col-xs-3">
-											<a class="btn btn-success" href="{% url 'onayla' is.id basvuran.user.id %}">Onayla</a>
-											<a class="btn btn-danger" href="{% url 'profil' basvuran.user.username %}">Reddet</a>
+											
+											<a class="btn btn-success" href="{% url 'basvuran_freelancerlar' user.username %}">Onaylamaya Git</a>
 		
 										</div>
 										{% endif %}

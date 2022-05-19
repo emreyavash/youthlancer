@@ -27,5 +27,6 @@ urlpatterns = [
     path('',include('profil.urls')),
     path('',include('kayit_giris.urls')),
     path('',include('mesajlasma.urls')),
+    path('',include('para_islemleri.urls')),
     path('ogrenci_dogrulama/',include('ogrenci_dogrulama.urls')),
 ] + static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

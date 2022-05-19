@@ -9,7 +9,7 @@ def dogrulama(file,username):
 def ogrenci_dogrulama(request):
     user = User.objects.get(id = request.user.id)  
     if user.is_superuser:
-        gonderen_ogrenciler = OgrenciDogrulama.objects.all()
+        gonderen_ogrenciler = OgrenciDogrulama.objects.all().order_by('id').reverse()
         context = {
             "gonderen_ogrenciler":gonderen_ogrenciler
         }

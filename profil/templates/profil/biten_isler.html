@@ -23,29 +23,38 @@
                 <th scope="col">İş Fiyat</th>
                 <th scope="col">Kategori</th>
                 <th scope="col">Alt Kategori</th>
-                <th scope="col">Alan</th>
-                <th scope="col">Açıklaman</th>
-                <th scope="col">Tamamlandı</th>
+                <th scope="col">freelancer</th>
+             
+                <th scope="col">Bitti</th>
+               
               </tr>
             </thead>
             <tbody>
+            {{odeme_yapildi_mi.yapilan_is}}
         
-            {% for basvurulan_is in basvurulan_isler %}
+            {% for biten_is in biten_isler %}
               <tr>
-                <td>{{basvurulan_is.is_bilgi.is_isim}}</td>
-                <td>{{basvurulan_is.is_bilgi.fiyat}}</td>
-                <td>{{basvurulan_is.is_bilgi.kategori.kategoriAd}}</td>
-                <td>{{basvurulan_is.is_bilgi.alt_kategori.altKategoriAd}}</td>
-                <td>{{basvurulan_is.alan|title}}</td>
-                <td>{{basvurulan_is.secim_aciklama|truncatechars:20}}</td>
+                <td>{{biten_is.is_bilgi.is_isim}}</td>
+                <td>{{biten_is.is_bilgi.fiyat}}</td>
+                <td>{{biten_is.is_bilgi.kategori.kategoriAd}}</td>
+                <td>{{biten_is.is_bilgi.alt_kategori.altKategoriAd}}</td>
+                <td>{{biten_is.user.first_name}} {{biten_is.user.last_name}}</td>
                 <td><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                     width="48" height="48"
                     viewBox="0 0 48 48"
                     style=" fill:#000000;"><path fill="#43A047" d="M40.6 12.1L17 35.7 7.4 26.1 4.6 29 17 41.3 43.4 14.9z"></path></svg></td>
+                    {% if biten_is.is_veren.username == request.user.username  %}
+                      {% if biten_is.is_bilgi == odeme_yapildi_mi.yapilan_is %}
+                        <td><a href="{{biten_is.upload.file.url}}" download>İndir</a></td>
+                      
+                      {% else %}
+                      <td><a href="{% url 'odeme' biten_is.is_veren.username biten_is.is_bilgi.id %}">Ödeme Yap</a></td>
+                      {% endif %}
+                {% else %}
+                {% endif %}
               </tr>
             {% endfor %}
             {% endif %}
-             
               
             </tbody>
           </table>

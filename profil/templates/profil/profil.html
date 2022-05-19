@@ -33,7 +33,7 @@
                   <a class="nav-link" href="{% url 'biten_isler' kullanici.user.username %}">Bitirilen İşler</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Hesap Özeti</a>
+                  <a class="nav-link" href="{% url 'hesap_ozeti' kullanici.user.username %}">Hesap Özeti</a>
                 </li>
               
               </ul>
@@ -53,7 +53,7 @@
                   <a class="nav-link" href="{% url 'biten_isler' kullanici.user.username %}">Bitirilen İşler</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Hesap Özeti</a>
+                  <a class="nav-link" href="{% url 'hesap_ozeti' kullanici.user.username %}">Hesap Özeti</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'is_olustur' user.username %}">İş Oluştur</a>
@@ -69,8 +69,17 @@
   
     
       <div class="container-m-nx container-m-ny theme-bg-white mb-4">
+     
         <div class="media col-md-10 col-lg-8 col-xl-7 py-5 mx-auto">
-          <img src="{{kullanici.kullanici_profil.url}}" alt="" class="d-block ui-w-100 rounded-circle">
+          {% if kullanici.kullanici_profil == 'False' %}
+            <img src="{% static 'profil/images/user.jpg' %}" alt="" class="d-block ui-w-100 rounded-circle">
+          {% elif kullanici.kullanici_profil == 'profil/images/user.jpg' %}
+            <img src="{% static 'profil/images/user.jpg' %}" alt="" class="d-block ui-w-100 rounded-circle">
+
+          {% else %}
+            <img src="{{kullanici.kullanici_profil.url}}" alt="" class="d-block ui-w-100 rounded-circle">
+
+          {% endif %}
           <div class="media-body ml-5">
             <h4 class="font-weight-bold mb-4">{{ kullanici.user.first_name}} {{ kullanici.user.last_name}}</h4>
 
@@ -125,7 +134,8 @@
           <!-- / Info -->
           <!-- Skills -->
           <div class="mb-3 right" >
-            {% if user_mi.username == user.username %}
+          
+            {% if request.user.username == user.username %}
             <a href="{% url 'yetenekEkle' kullanici.user.username %}" class="btn btn-warning">Yetenek Ekle  </a>
             {% else %}
 
@@ -150,7 +160,7 @@
           <!-- / Skills -->
           <!-- Posts -->
           <div class="mb-3 right" >
-            {% if user_mi.username == user.username %}
+            {% if request.user.username == user.username %}
             <a href="{% url 'portfoyEkle' kullanici.user.username %}" class="btn btn-warning">Portfolyo Ekle</a>
             {% else %}
             {% endif %}
@@ -202,7 +212,7 @@
 
           <!-- Photos -->
           <div class="mb-3 right" >
-            {% if user_mi.username == user.username  %}
+            {% if request.user.username == user.username  %}
             <a href="{% url 'fotografEkle' kullanici.user.username %}" class="btn btn-warning">Fotoğraf Ekle</a>
             {% else %}
             {% endif %}

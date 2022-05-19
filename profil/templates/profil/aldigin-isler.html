@@ -30,12 +30,12 @@
                 <th scope="col">Alt Kategori</th>
                 <th scope="col">Alan</th>
                 <th scope="col">Açıklaman</th>
+                <th scope="col">Dosya Yükle</th>
                 <th scope="col">İşi Teslim Et</th>
                 <th scope="col">Sil</th>
               </tr>
             </thead>
             <tbody>
-             
             {% for sf in secilen_free %}
               <tr>
                 <td>{{sf.is_bilgi.is_isim}}</td>
@@ -44,10 +44,18 @@
                 <td>{{sf.is_bilgi.alt_kategori.altKategoriAd}}</td>
                 <td>{{sf.basvuru.alan|title}}</td>
                 <td>{{sf.basvuru.secim_aciklama|truncatechars:20}}</td>
-                
+                <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                    <input type="hidden" value="{{sf.is_bilgi.id}}" name="is_bilgi">
+                    <input type="hidden" value="{{sf.user.id}}" name="freelancer">
+                    <input type="hidden" value="{{sf.is_veren.id}}" name="isveren">
+
+                    <td><input class="btn btn-success text-white" type="file" name="teslim_et"></td>
+                    <td><button type="submit" class="btn btn-success text-white" >Teslim Et</button></td>
+
+                </form>
             
 
-                <td><a class="btn btn-success text-white" href="{% url 'basvuru_sil' sf.is_bilgi.id sf.user.username %}">Teslim Et</a></td>
                 <td><a class="btn btn-danger text-white" href="{% url 'basvuru_sil' sf.is_bilgi.id sf.user.username %}">Sil</a></td>
               </tr>
               {% endfor %}

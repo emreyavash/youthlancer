@@ -23,9 +23,10 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="{% url 'kabul_edilen_freelancerlar' kullanici.username %}">Kabul Ettiğin Freelancerlar  </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Reddettiğin Freelancerlar</a>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'basvuran_freelancerlar' kullanici.username %}">Başvuran Freelancerlar  </a>
                 </li>
+      
                 
               
               </ul>
@@ -45,6 +46,7 @@
                 <th scope="col">Açıklama</th>
                 <th scope="col">Başlangıç Tarihi</th>
                 <th scope="col">Bitiş Bitiş</th>
+                <th scope="col">İş Aktif</th>
                 <th scope="col">Düzenle</th>
                 <th scope="col">Sil</th>
               </tr>
@@ -53,12 +55,18 @@
              
               {% for pi in paylasilan_isler %}
               <tr>
-                <td>{{pi.is_isim |truncatechars:30}}</td>
+                <td><a href="{% url 'icerik' pi.slug %}" target="_blank">{{pi.is_isim |truncatechars:30}}</a></td>
                 <td>{{pi.fiyat}}</td>
                 <td>{{pi.kategori.kategoriAd}}</td>
                 <td>{{pi.alt_kategori.altKategoriAd}}</td>
                 <td>{{pi.is_aciklama|truncatechars:50}}</td>
                 <td>{{pi.is_baslangic}}</td>
+                {% if pi.is_active %}
+                <td>İş Listeleniyor</td>
+                {% else %}
+                <td>İş Listelenmiyor</td>
+                {% endif %}
+                
                 <td>{{pi.is_bitis}}</td>
                
                 <td><a class="btn btn-success text-white" href="{% url 'is_duzenle' pi.user.username pi.id%}">Düzenle</a></td>

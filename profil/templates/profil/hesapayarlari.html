@@ -13,7 +13,9 @@
       </ol>
     </nav>
     <!-- /Breadcrumb -->
-
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
     <div class="row gutters-sm">
       <div class="col-md-4 d-none d-md-block">
         <div class="card">
@@ -73,19 +75,21 @@
                 {% csrf_token %}
                 <div class="form-group">
                   <label for="fullName">İsim</label>
-                  <input type="text" class="form-control" id="fullName" name="isim" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value=" {{  kullanici.user.first_name }}" >
+                  <input type="text" class="form-control" id="fullName" name="isim" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value="{{user.first_name}}" >
                 </div>
                 <div class="form-group">
                   <label for="fullName">Soyisim</label>
-                  <input type="text" class="form-control" id="fullName" name="soyisim"aria-describedby="fullNameHelp" placeholder="Enter your fullname" value="{{  kullanici.user.last_name }} " >
+                  <input type="text" class="form-control" id="fullName" name="soyisim"aria-describedby="fullNameHelp" placeholder="Enter your fullname" value="{{user.last_name}}" >
                 </div>
                 <div class="form-group">
                   <label for="bio">Açıklama</label>
-                  <textarea class="form-control autosize" name="aciklama" id="bio" placeholder="Write something about you" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;"></textarea>
+                  <textarea class="form-control autosize" name="aciklama" id="bio" placeholder="Write something about you" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 62px;">{{kullanici.aciklama}}</textarea>
                 </div>
                 <div class="form-group">
                   <label for="url">Profil Fotoğrafı</label>
-                  <input type="file" accept="image/*" class="form-control pb-2" name="profil-foto" id="url" value="{{kullanici.kullanici_profil}}">
+                  <input type="file" accept="image/*" class="form-control pb-2" name="profil-foto" id="url" >
+                  <input type="hidden" value="{% if kullanici.kullanici_profil == 'False' %}profil/images/user.jpg{% else %}{{kullanici.kullanici_profil}}{% endif %}" name="hidden_profil_fotografi">
+                  
                   
                 </div>
                 <div class="form-group">
@@ -122,27 +126,32 @@
                           {% endfor %}
                         </select>
                       </div>
-                      {% if belge_onay.is_correct %}
-                      <div class="form-group">
-                        <label for="url">Öğrenci Belgesi (Kartı)</label>
-                        <p>Öğrenci olduğunuz onaylandı.</p>
+                      {{kullanici.freelancer}}
+                      {% if kullanici.freelancer %}
+                        {% if belge_onay.is_correct %}
+                        <div class="form-group">
+                          <label for="url">Öğrenci Belgesi (Kartı)</label>
+                          <p>Öğrenci olduğunuz onaylandı.</p>
 
-                        
-                      </div>
-               
-                      {% else %}
-                      <div class="form-group">
-                        <label for="url">Öğrenci Belgesi (Kartı)</label>
-                        {% if belge_onay is not None %}
-                        <p>Öğrence belgeniz veya kartınız onaylanmayı bekliyor.</p>
+                          
+                        </div>
+                
                         {% else %}
-                          <input type="file" class="form-control pb-2" name="ogrenci_belge" id="ogrenci_belge">
+                        <div class="form-group">
+                          <label for="url">Öğrenci Belgesi (Kartı)</label>
+                          {% if belge_onay is not None %}
+                          <p>Öğrence belgeniz veya kartınız onaylanmayı bekliyor.</p>
+                          {% else %}
+                            <input type="file" accept="image/*" class="form-control pb-2" name="ogrenci_belge" id="ogrenci_belge">
 
+                          {% endif %}
+                          
+                        </div>
+                
                         {% endif %}
-                        
-                      </div>
-               
+                      {% else %}
                       {% endif %}
+                     
                     
                 <div class="form-group small text-muted">
                   All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears.

@@ -18,4 +18,13 @@ urlpatterns = [
     path('paylasilan_sil/<int:id>/<str:username>',views.paylasilan_sil,name='paylasilan_sil'),
     path('biten-isler/<str:username>',views.biten_isler,name='biten_isler'),
     path('kabul_edilen_freelancerlar/<str:username>',views.kabul_edilen_freelancerlar,name='kabul_edilen_freelancerlar'),
+    path('kabul_edilen_freelancer_iptal/<int:is_id>/<int:id>',views.kabul_edilen_freelancer_iptal,name='kabul_edilen_freelancer_iptal'),
+    path('kabul_edilen_freelancer_onay/<int:is_id>,<int:user_id>',views.kabul_edilen_freelancer_onay,name='kabul_edilen_freelancer_onay'),
+    path('basvuran-freelancerlar/<str:username>',views.basvuran_freelancerlar,name='basvuran_freelancerlar'),
+    path('onay/<int:is_id>,<int:user_id>',views.basvuran_freelancer_onay,name='onayla'),
+    path('iptal/<int:is_id>,<int:user_id>',views.basvuran_freelancer_iptal,name='iptal'),
+    path('hesap-ozeti/<str:username>',views.hesap_ozeti,name='hesap_ozeti'),
+
+
+
 ]

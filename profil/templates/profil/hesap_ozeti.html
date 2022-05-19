@@ -1,0 +1,49 @@
+{% extends "profil/base.html" %}
+{% load static %}
+{% block title %}Hesap Özeti{% endblock title %}
+{% block content %}
+<div class="layout-content">
+
+    <!-- Content -->
+    <div class="container flex-grow-1 container-p-y">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'profil' request.user.username %}">{{ request.user.first_name}} {{ request.user.last_name}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Hesap Özeti</li>
+            </ol>
+          </nav>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Toplam Para</th>
+                {% if kullanici.freelancer %}
+                <th scope="col">Çekilen Para</th>
+                
+                {% else %}
+                <th scope="col">Ödenen Para</th>
+
+                {% endif %}
+               
+               
+              </tr>
+            </thead>
+            <tbody>
+ 
+              <tr>
+                <td>{% if bakiye == None %}0{% else %}{{bakiye.toplam_bakiye}}{% endif %}</td>
+                {% if kullanici.freelancer %}
+                <td>{% if bakiye == Null %}0{% else %}{{bakiye.cekilen_para}}{% endif %}</td>
+                <td><a href="{% url 'para_cekme' kullanici.user.username %}">Para Çek</a></td>
+                
+                {% else %}
+                <td>{% if bakiye == Null %}0{% else %}{{bakiye.odenen_para}}{% endif %}</td>
+                
+
+                {% endif %}
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock %}

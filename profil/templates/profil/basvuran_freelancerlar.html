@@ -1,0 +1,71 @@
+{% extends "profil/base.html" %}
+{% load static %}
+{% block title %}Başvuran Freelancerlar{% endblock title %}
+{% block content %}
+<div class="layout-content">
+
+    <!-- Content -->
+    <div class="container flex-grow-1 container-p-y">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'anasayfa' %}">Anasayfa</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'paylasilan_isler' user.username %}">Paylaştığın İşler</a></li>
+            </ol>
+          </nav>
+
+          <table class="table">
+            <thead>
+              <tr>
+                
+                <th scope="col">İş</th>
+                <th scope="col">İş Fiyat</th>
+                <th scope="col">Kategori</th>
+                <th scope="col">Alt Kategori</th>
+                <th scope="col">Freelancer</th>
+                <th scope="col">Alanı</th>
+                <th scope="col">Açıklama</th>
+                <th scope="col">Onayla</th>
+                <th scope="col">İptal</th>
+              </tr>
+            </thead>
+            <tbody>
+            
+              {% for freelancer in basvuran_freelancerlar %}
+              {% if secilen_freelancer_var_mi %}
+       
+                            <tr>
+                                <td><a href="{% url 'icerik' freelancer.is_bilgi.slug %}" target="_blank">{{freelancer.is_bilgi.is_isim}}</a></td>
+                                <td>{{freelancer.is_bilgi.fiyat}} </td>
+                                <td>{{freelancer.is_bilgi.kategori.kategoriAd}}</td>
+                                <td>{{freelancer.is_bilgi.alt_kategori.altKategoriAd}}</td>
+                                <td><a href="{% url 'profil' freelancer.user.username %}" target="_blank">{{freelancer.user.first_name}} {{freelancer.user.last_name}}</a></td>
+                                <td>{{freelancer.alan}}</td>
+                                <td>{{freelancer.secim_aciklama}}</td>
+                            
+                                <td><a href="{% url 'onayla' freelancer.is_bilgi.id freelancer.user.id %}" class="btn btn-success text-light">Onayla</a></td>
+                                <td><a href="{% url 'iptal' freelancer.is_bilgi.id freelancer.user.id %}" class="btn btn-danger text-light">Başvuruyu Kaldır</a></td>
+                            </tr>
+                    
+                        
+                        
+                {% else %}
+                <tr>
+                    <td><a href="{% url 'icerik' freelancer.is_bilgi.slug %}" target="_blank">{{freelancer.is_bilgi.is_isim}}</a></td>
+                    <td>{{freelancer.is_bilgi.fiyat}} </td>
+                    <td>{{freelancer.is_bilgi.kategori.kategoriAd}}</td>
+                    <td>{{freelancer.is_bilgi.alt_kategori.altKategoriAd}}</td>
+                    <td><a href="{% url 'profil' freelancer.user.username %}" target="_blank">{{freelancer.user.first_name}} {{freelancer.user.last_name}}</a></td>
+                    <td>{{freelancer.alan}}</td>
+                    <td>{{freelancer.secim_aciklama}}</td>
+                    
+                    <td><a href="{% url 'onayla' freelancer.is_bilgi.id freelancer.user.id %}" class="btn btn-success text-light">Onayla</a></td>
+                    <td><a href="{% url 'iptal' freelancer.is_bilgi.id freelancer.user.id %}" class="btn btn-danger text-light">Başvuruyu Kaldır</a></td>
+                </tr>
+                {% endif %}
+              {% endfor %}
+              
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock %}

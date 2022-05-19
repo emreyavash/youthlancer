@@ -27,18 +27,21 @@
               </tr>
             </thead>
             <tbody>
-        
+              {% for freelancer in secilen_freelancer %}
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td><a href="{% url 'icerik' freelancer.is_bilgi.slug %}" target="_blank">{{freelancer.is_bilgi.is_isim}}</a></td>
+                <td>{{freelancer.is_bilgi.fiyat}} </td>
+                <td>{{freelancer.is_bilgi.kategori.kategoriAd}}</td>
+                <td>{{freelancer.is_bilgi.alt_kategori.altKategoriAd}}</td>
+                <td><a href="{% url 'profil' freelancer.user.username %}" target="_blank">{{freelancer.user.first_name}} {{freelancer.user.last_name}}</a></td>
+              
+                <td><a href="{% url 'mesajlasma' freelancer.user.username %}" class="btn btn-info text-light">Mesaj At</a></td>
+             
+
+                <td><a href="{% url 'kabul_edilen_freelancer_iptal' freelancer.is_bilgi.id freelancer.user.id %}" class="btn btn-danger text-light">İşi İptal Et</a></td>
               </tr>
        
-             
+              {% endfor %}
               
             </tbody>
           </table>

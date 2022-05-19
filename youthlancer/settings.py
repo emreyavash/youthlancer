@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'profil',
     'kayit_giris',
     'mesajlasma',
-    'ogrenci_dogrulama'
+    'ogrenci_dogrulama',
+    'para_islemleri',
 ]
 
 MIDDLEWARE = [
@@ -152,3 +153,13 @@ MEDIA_URL ="/images/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Email Config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER="digitaledu35@gmail.com"
+EMAIL_HOST_PASSWORD='emre.1234'
+EMAIL_USE_TLS = True
+EMAIL_PORT=587
+DEFAULT_FROM_EMAIL ="digitaledu35@gmail.com"
+
