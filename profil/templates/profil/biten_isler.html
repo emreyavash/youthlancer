@@ -48,7 +48,10 @@
                         <td><a href="{{biten_is.upload.file.url}}" download>İndir</a></td>
                       
                       {% else %}
-                      <td><a href="{% url 'odeme' biten_is.is_veren.username biten_is.is_bilgi.id %}">Ödeme Yap</a></td>
+              
+                        <td><a href="{% url 'odeme' biten_is.is_veren.username biten_is.is_bilgi.id %}">Ödeme Yap</a></td>
+
+                     
                       {% endif %}
                 {% else %}
                 {% endif %}

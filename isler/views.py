@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 # Create your views here.
 def filtering(param):
     return param != '' and param is not None
@@ -16,6 +17,14 @@ def isler_view(request,slug):
     kategori = Kategori.objects.get(slug=slug)
     is_filter = İsBilgileri.objects.filter(Q(kategori=kategori.id),Q(is_active = True)).order_by('id').reverse()
     alt_kategori = AltKategori.objects.filter(kategori=kategori.id)
+
+    #pagination başlangıç
+    paginator = Paginator(is_filter,8)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    nums = "a"*page_obj.paginator.num_pages 
+    #pagination bitir
+
     try:
         kullanici = Kullanici.objects.get(user = request.user.id)
     except Kullanici.DoesNotExist:
@@ -25,6 +34,7 @@ def isler_view(request,slug):
         altkategori = request.GET.get('alt-kategori')
         min_fiyat = request.GET.get('min_fiyat')
         max_fiyat = request.GET.get('max_fiyat')
+        search = request.GET.get('search')
         if filtering(altkategori):
             altkategoriFilter = AltKategori.objects.get(altKategoriAd = altkategori)
             is_filter = is_filter.filter(alt_kategori = altkategoriFilter.id)
@@ -35,13 +45,18 @@ def isler_view(request,slug):
         if filtering(max_fiyat):
             is_filter = is_filter.filter(fiyat__lte=max_fiyat) 
 
+        if filtering(search):
+            is_filter = is_filter.filter(is_isim__icontains=search) 
+
         if is_filter.exists():
 
             context={
                 'is':is_filter,
                 'kategoriListe':kategori,
                 'altKategori':alt_kategori,
-                'kullanici':kullanici
+                'kullanici':kullanici,
+                'page_obj':page_obj,
+                'nums':nums
             }
             return render(request,"isler/isler.html",context)
 

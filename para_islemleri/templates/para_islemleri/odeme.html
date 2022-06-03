@@ -1,7 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ödeme</title>
+</head>
+<body>
+  <form method="post">
+      {% csrf_token %}
+      <label for="is_isim">İş İsim</label>
+      <input type="text" value="{{yapilan_is.is_bilgi.is_isim}}" id="is_isim" name="is_isim">
+      <label for="fiyat">Fiyat</label>
+      <input type="text" value="{{yapilan_is.is_bilgi.fiyat}}" id="fiyat" name="fiyat">
+      <button type="submit">Ödeme Yap</button>
+  </form>
 
-<form method="post">
-    {% csrf_token %}
-    <input type="text" name="fiyat" value="{{yapilan_is.is_bilgi.fiyat}}">
-    <button type="submit">Öde</button>
 
-</form>
+</body>
+</html>
+

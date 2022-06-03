@@ -3,6 +3,8 @@
 {% block title %}Yazılım & Teknoloji{% endblock title %}
 {% block content %}
 <!-- banner -->
+
+  </head>
 	<div class="banner1" id="home1">
 		<div class="container">
 			<h2>Youthlancer<span>{{ kategoriListe.kategoriAd }}</span></h2>
@@ -34,31 +36,20 @@
 				<div class="col-md-8 w3ls_dresses_grid_right">
 				
 					<div class="clearfix"> </div>
-					{% if kullanici.freelancer_mi  %}
-						<div class="w3ls_dresses_grid_right_grid2">
-							<a href="{% url 'is_olustur' user.username %}" class="btn btn-warning">İş Oluştur  </a>
-
-						</div>
-					{% else %}
-					{% endif %}
+				
 					
-					{% comment %} 
+					
 					<div class="w3ls_dresses_grid_right_grid2">
-						<div class="w3ls_dresses_grid_right_grid2_left">
-							<h3>Showing Results: 0-1</h3>
-						</div>
+						
 						<div class="w3ls_dresses_grid_right_grid2_right">
-							<select name="select_item" class="select_item">
-								<option selected="selected">Default sorting</option>
-								<option>Sort by popularity</option>
-								<option>Sort by average rating</option>
-								<option>Sort by newness</option>
-								<option>Sort by price: low to high</option>
-								<option>Sort by price: high to low</option>
-							</select>
+						<form method="get">
+						<input type="text" name="search"><button><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+							width="24" height="24"
+							viewBox="0 0 24 24"
+							style=" fill:#000000;">    <path d="M 9 2 C 5.1458514 2 2 5.1458514 2 9 C 2 12.854149 5.1458514 16 9 16 C 10.747998 16 12.345009 15.348024 13.574219 14.28125 L 14 14.707031 L 14 16 L 20 22 L 22 20 L 16 14 L 14.707031 14 L 14.28125 13.574219 C 15.348024 12.345009 16 10.747998 16 9 C 16 5.1458514 12.854149 2 9 2 z M 9 4 C 11.773268 4 14 6.2267316 14 9 C 14 11.773268 11.773268 14 9 14 C 6.2267316 14 4 11.773268 4 9 C 4 6.2267316 6.2267316 4 9 4 z"></path></svg></button></form>
 						</div>
 						<div class="clearfix"> </div>
-					</div> {% endcomment %}
+					</div> 
 					<div class="w3ls_dresses_grid_right_grid3 ">
 						{% if error %}
 							<div class="col-md-6 agileinfo_new_products_grid agileinfo_new_products_grid_dresses " >
@@ -99,8 +90,34 @@
 				<div class="clearfix"> </div>
 			</div>
 		</div>
+		<nav  style="text-align: center;justify-content: center;" >
+			<ul class="pagination ">
+			 
+				{% if page_obj.has_previous %}
+					<li class="page-item"><a class="page-link" href="?page=1">&laquo; İlk</a></li>
+					<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Geri</a></li>
+				{% endif %}
+		
+
+				{% for i in nums %}
+				{% if page_obj.number == forloop.counter %}
+				<li class="page-item active"><a class="page-link " href="?page={{ forloop.counter }}">{{forloop.counter}}</a></li>
+				{% else %}
+				<li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{forloop.counter}}</a></li>
+				{% endif %}
+		
+				{% endfor %}
+				
+				
+
+				{% if page_obj.has_next %}
+				<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">İleri</a></li>
+					<li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Son &raquo;</a></li>
+				{% endif %}
+				
+			</ul>
+		</nav>
 	</div>
 
 
-<!-- //dresses -->
 {% endblock content %}

@@ -1,4 +1,5 @@
 
+from random import randint
 from django.contrib import messages
 from django.shortcuts import redirect, render
 
@@ -16,6 +17,11 @@ from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 
+import base64
+import hmac
+import hashlib
+import requests
+import json
 # Create your views here.
 @login_required(login_url='giris_yap')
 def profil_view(request,username):
@@ -437,6 +443,8 @@ def biten_isler(request,username):
     if request.user.username == username:
         kullanici = User.objects.get(username = username)
         kullanici_bilgileri = Kullanici.objects.get(user = kullanici.id)
+
+        
         if kullanici_bilgileri.freelancer:
             biten_isler = Secilen_Freelancer.objects.filter(Q(user = kullanici.id),Q(is_bitti_mi = True))
 
@@ -446,7 +454,7 @@ def biten_isler(request,username):
                 
                     odeme_yapildi_mi = ParaYatirma.objects.filter(freelancer = biten_is.user,isveren = biten_is.is_veren,yapilan_is = biten_is.is_bilgi)
                     if odeme_yapildi_mi.exists():
-                       odeme_yapildi_mi= odeme_yapildi_mi.first()
+                        odeme_yapildi_mi= odeme_yapildi_mi.first()
                     else:
                         odeme_yapildi_mi = None
                         para_yatirma(request,is_id=biten_is.is_bilgi,username=biten_is.is_veren.username)
@@ -574,6 +582,7 @@ def kabul_edilen_freelancer_iptal(request,is_id,id):
     freelancer_iptal.delete()
     return redirect('kabul_edilen_freelancerlar',freelancer_iptal.is_bilgi.user.username)
 
+@login_required(login_url='giris_yap')
 def hesap_ozeti(request,username):
     user  =User.objects.get(username = username)
     if request.user.username == user.username:

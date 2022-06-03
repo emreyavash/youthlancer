@@ -14,7 +14,7 @@ class Universite(models.Model):
     def __str__(self) :
         return f"{self.universite}"
 class Kullanici(models.Model):
-    user=models.ForeignKey(User,on_delete=models.DO_NOTHING,null=False,blank=True)
+    user=models.ForeignKey(User,related_name='kullanici',on_delete=models.DO_NOTHING,null=False,blank=True)
     kullanici_profil=models.ImageField(upload_to='kullanici',null=True)
     dogum_gunu = models.DateField(null=True)
     freelancer = models.BooleanField(default=False)
